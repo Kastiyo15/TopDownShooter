@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb71ecb3d0c2cd44ae7ee08c0a1d4dc, type: 3}
+  m_Name: ShotgunBulletData1
+  m_EditorClassIdentifier: 
+  BulletID: 1
+  BulletName: Default Shotgun Ammo
+  BulletPrefab: {fileID: 5448262206932121531, guid: c5a4be0e44f37364eacf81805441fab9, type: 3}
+  BulletDamage: 25
+  BulletVelocity: 15
+  BulletAmount: 3
+  BulletDamageMult: 14
+  BulletVelocityMult: 1.5
+  BulletAmountMult: 2

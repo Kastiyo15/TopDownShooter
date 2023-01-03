@@ -72,6 +72,38 @@ public class SaveData
     public float Z_TotalAccuracy; // bullets hit / fired / 100
     #endregion
 
+    // Prefix W_
+    #region PLAYER WEAPON STATS
+    [Header("Weapon Stats")]
+    public int Z_WeaponID;
+    public string Z_WeaponName;
+    public int Z_WeaponClipSize;
+    public float Z_WeaponFireRate;
+    public float Z_WeaponSpread;
+
+    [Header("Weapon Base Stat Multipliers")]
+    public int Z_WeaponClipSizeMult;
+    public float Z_WeaponFireRateMult;
+    public float Z_WeaponSpreadMult;
+    #endregion
+
+    // Prefix B_
+    #region PLAYER BULLET STATS
+    [Header("Bullet Stats")]
+    public int Z_BulletID;
+    public string Z_BulletName;
+    public GameObject Z_BulletPrefab;
+    public int Z_BulletDamage;
+    public float Z_BulletVelocity;
+    public int Z_BulletAmount;
+
+    [Header("Bullet Base Stat Multipliers")]
+    public int Z_BulletDamageMult;
+    public float Z_BulletVelocityMult;
+    public float Z_BulletAmountMult;
+    #endregion
+
+
 
     // First method to convert class to Json string
     public string ToJson()

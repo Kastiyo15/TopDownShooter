@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb71ecb3d0c2cd44ae7ee08c0a1d4dc, type: 3}
+  m_Name: RifleBulletData1
+  m_EditorClassIdentifier: 
+  BulletID: 0
+  BulletName: Default Rifle Ammo
+  BulletPrefab: {fileID: 6455864102353421636, guid: a01780060cee1b24bb7bdd1091b30708, type: 3}
+  BulletDamage: 50
+  BulletVelocity: 15
+  BulletAmount: 1
+  BulletDamageMult: 25
+  BulletVelocityMult: 1.5
+  BulletAmountMult: 1

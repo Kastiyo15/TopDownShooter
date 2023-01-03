@@ -115,4 +115,67 @@ public class GameManager : MonoBehaviour
         Debug.Log("Quitting Game...");
         Application.Quit();
     }
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////
+    // SAVING AND LOADING //
+    //////////////////////////////////////////////////////////////////
+    public static void SaveJsonData(GameManager a_GameManager)
+    {
+        SaveData sd = new SaveData();
+        a_GameManager.PopulateSaveData(sd);
+
+        if (FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
+        {
+            Debug.Log("Save Successful");
+        }
+    }
+
+
+    public void PopulateSaveData(SaveData a_SaveData)
+    {
+        // Save Player Stats
+        PlayerStatsManager.Instance.PopulateSaveData(a_SaveData);
+
+        // Save Weapon Stats
+        WeaponStatsManager.Instance.PopulateSaveData(a_SaveData);
+
+        // Save Bullet Stats
+        BulletStatsManager.Instance.PopulateSaveData(a_SaveData);
+    }
+
+
+
+    public static void LoadJsonData(GameManager a_GameManager)
+    {
+        if (FileManager.LoadFromFile("SaveData.dat", out var json))
+        {
+            SaveData sd = new SaveData();
+            sd.LoadFromJson(json);
+
+            a_GameManager.LoadFromSaveData(sd);
+            Debug.Log("Load Complete");
+        }
+    }
+
+
+    public void LoadFromSaveData(SaveData a_SaveData)
+    {
+        // Load Player Stats
+        PlayerStatsManager.Instance.LoadFromSaveData(a_SaveData);
+
+        // Load Weapon Stats
+        WeaponStatsManager.Instance.LoadFromSaveData(a_SaveData);
+
+        // Load Bullet Stats
+        BulletStatsManager.Instance.LoadFromSaveData(a_SaveData);
+    }
+    //////////////////////////////////////////////////////////////////
+    // SAVING AND LOADING //
+    //////////////////////////////////////////////////////////////////
 }

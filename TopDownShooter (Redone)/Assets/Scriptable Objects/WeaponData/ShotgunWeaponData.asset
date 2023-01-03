@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c699fbf1c831ffa4f98dd452334476cc, type: 3}
+  m_Name: ShotgunWeaponData
+  m_EditorClassIdentifier: 
+  WeaponID: 1
+  WeaponName: Shotgun
+  WeaponPrefab: {fileID: 2446221761076486800, guid: 1a32d5b476872f84b8253de61f5ed9af, type: 3}
+  WeaponClipSize: 10
+  WeaponFireRate: 1
+  WeaponSpread: 18
+  WeaponClipSizeMult: 5
+  WeaponFireRateMult: 0.9
+  WeaponSpreadMult: 9

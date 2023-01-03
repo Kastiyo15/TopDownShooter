@@ -14,22 +14,11 @@ public class Player : MonoBehaviour
     private Vector2 _mousePos;
 
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
-    }
-
-
     // Update is called once per frame
     private void Update()
     {
-        // Work out player movement part 1
-        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _moveVelocity = moveInput.normalized;
-
-        // Rotate player towards crosshair part 1
-        _mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+        GetPlayerMovement();
+        GetPlayerRotation();
     }
 
 
@@ -43,5 +32,22 @@ public class Player : MonoBehaviour
         Vector2 lookDir = (_mousePos - _rb.position);
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         _rb.rotation = angle;
+    }
+
+
+    // Update the new input vectors
+    private void GetPlayerMovement()
+    {
+        // Work out player movement part 1
+        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _moveVelocity = moveInput.normalized;
+    }
+
+
+    // Update where the mouse position is
+    private void GetPlayerRotation()
+    {
+        // Rotate player towards crosshair part 1
+        _mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
     }
 }
