@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
+    [Header("Weapon Spread Stats")]
+    [SerializeField] private float _startAngle = 0f;
+    [SerializeField] private float _endAngle = 0f;
+    [SerializeField] private float _angleStep = 0f;
+    [SerializeField] private float _angle = 0f;
+
     [Header("List of Weapons")]
     [SerializeField] private List<WeaponController> _weaponController = new List<WeaponController>(); // List of weapon controller prefabs
 
@@ -16,12 +22,7 @@ public class PlayerShoot : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform _firePoint; // Where the bullet will fire from
-
-    [Header("Weapon Spread Stats")]
-    [SerializeField] private float _startAngle = 0f;
-    [SerializeField] private float _endAngle = 0f;
-    [SerializeField] private float _angleStep = 0f;
-    [SerializeField] private float _angle = 0f;
+    [SerializeField] private HUDScript _scriptHUD; // Script for the weapons HUD
 
 
     private int id = 0;
@@ -81,6 +82,8 @@ public class PlayerShoot : MonoBehaviour
     {
         _weaponController[id].LoadWeaponData(_weaponController[id].WeaponData);
         _bulletController[id].LoadBulletData(_bulletController[id].BulletData);
+
+        _scriptHUD.WeaponSelectedHUD(id);
     }
 
 
@@ -94,15 +97,17 @@ public class PlayerShoot : MonoBehaviour
         // if Rifle, then give messy spray when changing weapon spread
         if (id == 0)
         {
-            if (_bulletController[id].BulletData.BulletAmount == 0 && _weaponController[id].WeaponData.WeaponSpread != 0)
-            {
-                _startAngle = -(_firePoint.eulerAngles.z) + Random.Range(-_weaponController[id].WeaponData.WeaponSpread, _weaponController[id].WeaponData.WeaponSpread);
-                _endAngle = -(_firePoint.eulerAngles.z) - Random.Range(-_weaponController[id].WeaponData.WeaponSpread, _weaponController[id].WeaponData.WeaponSpread);
-            }
-            else if (_bulletController[id].BulletData.BulletAmount > 0) // if you have more than 1 bullet, then do a shotgun arc
+            // If you have 1 bullet and no weapon spread, fire accurate
+            if (_bulletController[id].BulletData.BulletAmount == 1 && _weaponController[id].WeaponData.WeaponSpread == 0)
             {
                 _startAngle = -(_firePoint.eulerAngles.z) + _weaponController[id].WeaponData.WeaponSpread;
                 _endAngle = -(_firePoint.eulerAngles.z) - _weaponController[id].WeaponData.WeaponSpread;
+            }
+            // If you have 1 or more and bullet spread is not equal to 0, fire randomly
+            else if (_bulletController[id].BulletData.BulletAmount >= 1 && _weaponController[id].WeaponData.WeaponSpread != 0)
+            {
+                _startAngle = -(_firePoint.eulerAngles.z) + Random.Range(-_weaponController[id].WeaponData.WeaponSpread, _weaponController[id].WeaponData.WeaponSpread);
+                _endAngle = -(_firePoint.eulerAngles.z) - Random.Range(-_weaponController[id].WeaponData.WeaponSpread, _weaponController[id].WeaponData.WeaponSpread);
             }
         }
 
@@ -116,9 +121,10 @@ public class PlayerShoot : MonoBehaviour
             }
         }
 
-
-        _angleStep = (_endAngle - _startAngle) / _bulletController[id].BulletData.BulletAmount;
+        // _angleStep = (_endAngle - _startAngle) / _bulletController[id].BulletData.BulletAmount;
+        _angleStep = -((2 * _weaponController[id].WeaponData.WeaponSpread) / (_bulletController[id].BulletData.BulletAmount - 1));
         _angle = _startAngle;
+
 
         for (int i = 0; i < _bulletController[id].BulletData.BulletAmount; i++)
         {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 296976512808701449}
   - component: {fileID: 6016893097567297528}
   - component: {fileID: 6824042863191793846}
+  - component: {fileID: -8770863580970274271}
   - component: {fileID: -2586700599344840677}
   m_Layer: 0
   m_Name: RifleAmmoPrefab1
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6455864102353421636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -123,7 +124,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.84, y: 1.79}
+  m_Size: {x: 0.93, y: 1.81}
   m_Direction: 0
 --- !u!96 &6824042863191793846
 TrailRenderer:
@@ -233,6 +234,26 @@ TrailRenderer:
   m_MinVertexDistance: 0
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!95 &-8770863580970274271
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455864102353421636}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03d35d48c40aeac4b9caa14c53015bf5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-2586700599344840677
 MonoBehaviour:
   m_ObjectHideFlags: 0

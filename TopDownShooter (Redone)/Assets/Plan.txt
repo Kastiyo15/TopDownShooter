@@ -1,0 +1,125 @@
+# GAME PLAN
+
+### Main Menu
+
+- Try to load data from the player
+- If new player then have **New Game**, **Options**, **Exit Game**. Otherwise, have **Continue**
+- If click **New Game**, then load
+
+### Tutorial
+
+- Introduce player to movement and aiming
+- Introduce weapon switching
+- Introduce abilities (like dash)
+
+### Game Scene
+
+- Start playing straight away as soon as load
+- Spawn Enemies in waves
+- Difficulty proportional to players level
+    - Could have level limits to which enemies spawn (no enemy 2 until level 20…)
+    - Then when unlocked, percentage spawn rate increases with level increment (enemy 2 spawn rate = 0.1 * level)
+    - Enemies will have different stats
+        - randomly assigned based on level they are
+        - each enemy will be same level as player
+    - A side screen or dropdown from the top showing the levels of each enemy in this run and stats range (Enemy 1: Health: 200 - 600) (since its randomly assigned
+
+### Shooting
+
+- maybe a bar on the screen somewhere to showcase the clip size, if it gets full then lock shooting (”reload”) until bar fills up - WEAPON OVERHEAT, when bar is full, goes red then decreases, cant shoot until its zero
+- Maybe a Clip Counter next to crosshair showing size of the clip, and how many bullets are ‘inactive’
+    - Can have a counter which gets updated via the projectile script ‘onEnable’ ‘onDisable’
+- Damage counter when hit enemy or get hit
+- Flash when hit
+
+### Score
+
+- Have a scoring system which counts:
+    - score per (timer)
+    - score per kill
+    - Score per bullet fired
+    - score per ability used
+    - Bonus score for completing a wave
+- At then end, display all scores on a screen and then the total score
+- Score = Experience / 10
+
+### Leveling Up
+
+- Each level player receives 1 Talent Point
+- Every 5 levels player receives 2 Talent points
+
+---
+
+### Enemy Types
+
+---
+
+### Talent System
+
+- Take note of total talent points gained
+- How many spent
+- How many available
+- At death screen, Menu will show a ‘**Talents**’ option
+    - **Page 1 - Player Upgrades**
+        - left half showing player general stats, HEA, DEF, AGI and respective upgrades
+        - right half showing all current stats and how upgrades will affect them, when hovered over
+        - add ability to change player sprite/colour
+    - **Page 2 - Weapon Upgrade**
+        - Have weapon type at the top, switching page between the different weapons/bullets
+        - Left half showing weapon upgrades
+    - **Page 3 - Bullet Upgrades**
+        - Have weapon type at the top, switching page between the different weapons/bullets
+        - Left half showing bullet upgrades and ability to change each bullet sprite/colour/trail/bullet effect
+
+### Abilities
+
+- Player selects 0-4 abilties?  Maybe 2 or 4 abilities for each weapon? Switching weapons gives different abilities
+- Time-limited abilities
+    - Dash
+    - Homing Rockets
+    - Invincibility
+- Passive Abilities
+    - Double health
+    - Double damage
+
+---
+
+# SAVING AND LOADING UPGRADES
+
+Players Spent talent points will go into a seperate list<>:
+
+`PlayerHealthPointsSpentList<>`
+
+`PlayerDefencePointsSpentList<>`
+
+`PlayerAgilityPointsSpentList<>`
+
+Then have a list for both weapons and both bullets:
+
+`WeaponRiflePointsSpentList<>`
+
+`WeaponShotgunPointsSpentList<>`
+
+`BulletRiflePointsSpentList<>`
+
+`BulletShotgunPointsSpentList<>`
+
+## Player Stats
+
+WHEN SPENDING TALENT POINTS, SAVE VALUES IN A SEPERATE LIST, stated above
+
+## Weapon and Bullet Stats
+
+Each scriptable weapon and bullet will have its own base stats and multipliers.
+
+### Loading Default Stats
+
+- `Weapon Controller` has a function which adds selected weapon stats to the `WeaponStatsManager.Instance`
+- `Bullet Controller` has a function which adds selected weapon stats to the `BulletStatsManager.Instance`
+
+### Loading Upgraded Stats
+
+- `Weapon Controller` has another function which gets called afterwards
+    - This will get the points spent list for the corresponding weapon/bullet
+    - multiply those values by the multipliers found in the scriptable object
+    - update the StatsManager.Instance values again

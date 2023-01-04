@@ -44,7 +44,6 @@ public class SaveData
     public int Z_TalentPoints; // how many total talent points player has
     public int Z_TalentPointsSpent; // total talent points spent
     public int Z_TalentPointsAvailable; // total remaining talent points
-    public List<int> Z_WeaponPointsSpentList = new List<int>(); // list to save where and how many talents points were spent on weapon skills 
     #endregion
 
     // Prefix S_
@@ -103,7 +102,21 @@ public class SaveData
     public float Z_BulletAmountMult;
     #endregion
 
+    // All Lists
+    #region ALL PLAYER, WEAPON, BULLET, SCORE LISTS
+    [Header("Player General and Score Lists")]
+    public List<int> Z_TalentPointsSpentGeneral = new List<int>();
+    public List<int> Z_TalentPointsSpentHealth = new List<int>();
+    public List<int> Z_TalentPointsSpentDefence = new List<int>();
+    public List<int> Z_TalentPointsSpentAgility = new List<int>();
+    public List<int> Z_TalentPointsSpentScore = new List<int>();
 
+    [Header("Weapon and Bullet Lists")]
+    public List<int> Z_TalentPointsSpentRifleWeapon = new List<int>();
+    public List<int> Z_TalentPointsSpentShotgunWeapon = new List<int>();
+    public List<int> Z_TalentPointsSpentRifleBullet = new List<int>();
+    public List<int> Z_TalentPointsSpentShotgunBullet = new List<int>();
+    #endregion
 
     // First method to convert class to Json string
     public string ToJson()

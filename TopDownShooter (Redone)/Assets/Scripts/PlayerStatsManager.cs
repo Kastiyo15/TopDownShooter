@@ -53,7 +53,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     public int L_TalentPoints; // how many total talent points player has
     public int L_TalentPointsSpent; // total talent points spent
     public int L_TalentPointsAvailable; // total remaining talent points
-    public List<int> L_WeaponPointsSpentList = new List<int>(); // list to save where and how many talents points were spent on weapon skills 
     #endregion
 
     // Prefix S_
@@ -79,6 +78,27 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     public int C_TotalBulletsFired;
     public int C_TotalBulletsHit;
     public float C_TotalAccuracy; // bullets hit / fired / 100
+    #endregion
+
+    #region PLAYER TALENT POINTS LISTS
+    [Header("Player Points Spent Lists")]
+    public List<int> L_TalentPointsSpentGeneral = new List<int>();
+    public List<int> L_TalentPointsSpentHealth = new List<int>();
+    public List<int> L_TalentPointsSpentDefence = new List<int>();
+    public List<int> L_TalentPointsSpentAgility = new List<int>();
+    public List<int> L_TalentPointsSpentScore = new List<int>();
+    #endregion
+
+    #region PLAYER WEAPON POINTS LIST
+    [Header("Weapon Points Lists")]
+    public List<int> L_TalentPointsSpentRifleWeapon = new List<int>();
+    public List<int> L_TalentPointsSpentShotgunWeapon = new List<int>();
+    #endregion
+
+    #region PLAYER BULLET POINTS LIST
+    [Header("Bullet Points Lists")]
+    public List<int> L_TalentPointsSpentRifleBullet = new List<int>();
+    public List<int> L_TalentPointsSpentShotgunBullet = new List<int>();
     #endregion
 
 
@@ -120,7 +140,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         a_SaveData.Z_TalentPoints = L_TalentPoints;
         a_SaveData.Z_TalentPointsSpent = L_TalentPointsSpent;
         a_SaveData.Z_TalentPointsAvailable = L_TalentPointsAvailable;
-        a_SaveData.Z_WeaponPointsSpentList = L_WeaponPointsSpentList;
 
         // Score
         a_SaveData.Z_TotalScore = S_TotalScore;
@@ -138,6 +157,19 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         a_SaveData.Z_TotalBulletsFired = C_TotalBulletsFired;
         a_SaveData.Z_TotalBulletsHit = C_TotalBulletsHit;
         a_SaveData.Z_TotalAccuracy = C_TotalAccuracy;
+
+        // Player Lists
+        a_SaveData.Z_TalentPointsSpentGeneral = L_TalentPointsSpentGeneral;
+        a_SaveData.Z_TalentPointsSpentHealth = L_TalentPointsSpentHealth;
+        a_SaveData.Z_TalentPointsSpentDefence = L_TalentPointsSpentDefence;
+        a_SaveData.Z_TalentPointsSpentAgility = L_TalentPointsSpentAgility;
+        a_SaveData.Z_TalentPointsSpentScore = L_TalentPointsSpentScore;
+
+        // Weapon Lists
+        a_SaveData.Z_TalentPointsSpentRifleWeapon = L_TalentPointsSpentRifleWeapon;
+        a_SaveData.Z_TalentPointsSpentShotgunWeapon = L_TalentPointsSpentShotgunWeapon;
+        a_SaveData.Z_TalentPointsSpentRifleBullet = L_TalentPointsSpentRifleBullet;
+        a_SaveData.Z_TalentPointsSpentShotgunBullet = L_TalentPointsSpentShotgunBullet;
     }
 
 
@@ -167,7 +199,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         L_TalentPoints = a_SaveData.Z_TalentPoints;
         L_TalentPointsSpent = a_SaveData.Z_TalentPointsSpent;
         L_TalentPointsAvailable = a_SaveData.Z_TalentPointsAvailable;
-        L_WeaponPointsSpentList = a_SaveData.Z_WeaponPointsSpentList;
 
         // Score
         S_TotalScore = a_SaveData.Z_TotalScore;
@@ -185,6 +216,19 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         C_TotalBulletsFired = a_SaveData.Z_TotalBulletsFired;
         C_TotalBulletsHit = a_SaveData.Z_TotalBulletsHit;
         C_TotalAccuracy = a_SaveData.Z_TotalAccuracy;
+
+        // Player Lists
+        L_TalentPointsSpentGeneral = a_SaveData.Z_TalentPointsSpentGeneral;
+        L_TalentPointsSpentHealth = a_SaveData.Z_TalentPointsSpentHealth;
+        L_TalentPointsSpentDefence = a_SaveData.Z_TalentPointsSpentDefence;
+        L_TalentPointsSpentAgility = a_SaveData.Z_TalentPointsSpentAgility;
+        L_TalentPointsSpentScore = a_SaveData.Z_TalentPointsSpentScore;
+
+        // Weapon Lists
+        L_TalentPointsSpentRifleWeapon = a_SaveData.Z_TalentPointsSpentRifleWeapon;
+        L_TalentPointsSpentShotgunWeapon = a_SaveData.Z_TalentPointsSpentShotgunWeapon;
+        L_TalentPointsSpentRifleBullet = a_SaveData.Z_TalentPointsSpentRifleBullet;
+        L_TalentPointsSpentShotgunBullet = a_SaveData.Z_TalentPointsSpentShotgunBullet;
     }
     ////////////////////////
     // SAVING AND LOADING //
