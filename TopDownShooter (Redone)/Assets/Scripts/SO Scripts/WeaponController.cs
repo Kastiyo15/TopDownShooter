@@ -29,5 +29,8 @@ public class WeaponController : MonoBehaviour
         WeaponStatsManager.Instance.W_WeaponClipSizeMult = WeaponData.WeaponClipSizeMult;
         WeaponStatsManager.Instance.W_WeaponFireRateMult = WeaponData.WeaponFireRateMult;
         WeaponStatsManager.Instance.W_WeaponSpreadMult = WeaponData.WeaponSpreadMult;
+
+
+        // Probably need to link this to the upgrade section, where it then alters the saved upgraded versions
     }
 }

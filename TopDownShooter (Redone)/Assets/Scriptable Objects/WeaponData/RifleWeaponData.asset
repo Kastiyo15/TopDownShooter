@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponID: 0
   WeaponName: Rifle
-  WeaponPrefab: {fileID: 1718820450105892484, guid: f96083b1d7c20574da6a52b0539c0362, type: 3}
   WeaponClipSize: 10
-  WeaponFireRate: 1
+  WeaponFireRate: 0.5
   WeaponSpread: 0
   WeaponClipSizeMult: 5
   WeaponFireRateMult: 0.8

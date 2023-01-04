@@ -13,16 +13,12 @@ public class Crosshair : MonoBehaviour
     {
         if (!GameManager.GameIsPaused)
         {
-            Vector2 mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 targetPos = ((Vector2)_player.position + mousePos) / 2f;
-
-            targetPos.x = Mathf.Clamp(targetPos.x, -_range + _player.position.x, _range + _player.position.x);
-            targetPos.y = Mathf.Clamp(targetPos.y, -_range + _player.position.y, _range + _player.position.y);
+            Vector3 mousePos = MouseUtils.GetMousePosition2d();
 
             // Rotate the crosshair for fun
             transform.Rotate(Vector3.forward * 100f * Time.deltaTime);
 
-            this.transform.position = targetPos;
+            this.transform.position = mousePos;
         }
         return;
     }

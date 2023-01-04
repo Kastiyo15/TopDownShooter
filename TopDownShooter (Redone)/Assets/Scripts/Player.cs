@@ -48,6 +48,6 @@ public class Player : MonoBehaviour
     private void GetPlayerRotation()
     {
         // Rotate player towards crosshair part 1
-        _mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+        _mousePos = MouseUtils.GetMousePosition2d();
     }
 }

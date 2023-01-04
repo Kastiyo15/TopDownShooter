@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BulletStatsManager : MonoBehaviour, ISaveable
+public class BulletStatsManager : MonoBehaviour/* , ISaveable */
 {
 
     public static BulletStatsManager Instance { get; private set; }
@@ -35,7 +35,7 @@ public class BulletStatsManager : MonoBehaviour, ISaveable
 
 
 
-    ////////////////////////
+/*     ////////////////////////
     // SAVING AND LOADING //
     ////////////////////////
     public void PopulateSaveData(SaveData a_SaveData)
@@ -72,6 +72,6 @@ public class BulletStatsManager : MonoBehaviour, ISaveable
     }
     ////////////////////////
     // SAVING AND LOADING //
-    ////////////////////////
+    //////////////////////// */
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class WeaponStatsManager : MonoBehaviour, ISaveable
+public class WeaponStatsManager : MonoBehaviour/* , ISaveable */
 {
 
     public static WeaponStatsManager Instance { get; private set; }
@@ -34,7 +34,7 @@ public class WeaponStatsManager : MonoBehaviour, ISaveable
 
 
 
-    ////////////////////////
+/*     ////////////////////////
     // SAVING AND LOADING //
     ////////////////////////
     public void PopulateSaveData(SaveData a_SaveData)
@@ -69,6 +69,6 @@ public class WeaponStatsManager : MonoBehaviour, ISaveable
     }
     ////////////////////////
     // SAVING AND LOADING //
-    ////////////////////////
+    //////////////////////// */
 }
 

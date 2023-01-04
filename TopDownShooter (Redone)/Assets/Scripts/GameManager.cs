@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static bool IsDead = false;
 
     [Header("Menu Panels")]
+    [SerializeField] private GameObject _panelMaster;
     [SerializeField] private GameObject _panelPauseMenu;
     [SerializeField] private GameObject _panelOptionsMenu;
 
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         // Game Properties
+        _panelMaster.SetActive(false);
         _panelPauseMenu.SetActive(false);
         _panelOptionsMenu.SetActive(false);
 
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         // Game Properties
+        _panelMaster.SetActive(true);
         _panelPauseMenu.SetActive(true);
 
         Time.timeScale = 0f;
@@ -142,11 +145,11 @@ public class GameManager : MonoBehaviour
         // Save Player Stats
         PlayerStatsManager.Instance.PopulateSaveData(a_SaveData);
 
-        // Save Weapon Stats
-        WeaponStatsManager.Instance.PopulateSaveData(a_SaveData);
+        /*         // Save Weapon Stats
+                WeaponStatsManager.Instance.PopulateSaveData(a_SaveData);
 
-        // Save Bullet Stats
-        BulletStatsManager.Instance.PopulateSaveData(a_SaveData);
+                // Save Bullet Stats
+                BulletStatsManager.Instance.PopulateSaveData(a_SaveData); */
     }
 
 
@@ -169,11 +172,11 @@ public class GameManager : MonoBehaviour
         // Load Player Stats
         PlayerStatsManager.Instance.LoadFromSaveData(a_SaveData);
 
-        // Load Weapon Stats
-        WeaponStatsManager.Instance.LoadFromSaveData(a_SaveData);
+        /*         // Load Weapon Stats
+                WeaponStatsManager.Instance.LoadFromSaveData(a_SaveData);
 
-        // Load Bullet Stats
-        BulletStatsManager.Instance.LoadFromSaveData(a_SaveData);
+                // Load Bullet Stats
+                BulletStatsManager.Instance.LoadFromSaveData(a_SaveData); */
     }
     //////////////////////////////////////////////////////////////////
     // SAVING AND LOADING //
