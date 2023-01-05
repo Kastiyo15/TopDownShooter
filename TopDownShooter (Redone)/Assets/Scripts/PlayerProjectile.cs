@@ -6,10 +6,27 @@ public class PlayerProjectile : MonoBehaviour
 
     private int _damageValue;
 
+
     // Once enabled, disable after 3 seconds
     private void OnEnable()
     {
+        // when enabled, set the damage of the bullet to the current equipped weapon
         _damageValue = BulletStatsManager.Instance.B_BulletDamage;
+
+
+        // decrease the respective bullet counters
+        // rifle
+        if (CompareTag("RifleBullet"))
+        {
+            WeaponStatsManager.Instance.W_CurrentRifleClip--;
+        }
+        // shotgun
+        if (CompareTag("ShotgunBullet"))
+        {
+            WeaponStatsManager.Instance.W_CurrentShotgunClip--;
+        }
+
+
         Invoke("Disable", 2f);
     }
 
@@ -27,8 +44,6 @@ public class PlayerProjectile : MonoBehaviour
 
             Disable();
         }
-
-
     }
 
 
@@ -42,6 +57,18 @@ public class PlayerProjectile : MonoBehaviour
     // once disabled, stop invoking
     private void OnDisable()
     {
+        // increase the respective bullet counters
+        // rifle
+        if (CompareTag("RifleBullet"))
+        {
+            WeaponStatsManager.Instance.W_CurrentRifleClip++;
+        }
+        // shotgun
+        if (CompareTag("ShotgunBullet"))
+        {
+            WeaponStatsManager.Instance.W_CurrentShotgunClip++;
+        }
+
         CancelInvoke();
     }
 

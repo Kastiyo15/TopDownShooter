@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -2586700599344840677}
   m_Layer: 0
   m_Name: RifleAmmoPrefab1
-  m_TagString: Player
+  m_TagString: RifleBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

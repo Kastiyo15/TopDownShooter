@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -2485660872088659605}
   m_Layer: 0
   m_Name: ShotgunAmmoPrefab1
-  m_TagString: Player
+  m_TagString: ShotgunBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

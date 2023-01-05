@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponID: 1
   WeaponName: Shotgun
-  WeaponPrefab: {fileID: 2446221761076486800, guid: 1a32d5b476872f84b8253de61f5ed9af, type: 3}
   WeaponClipSize: 10
   WeaponFireRate: 1
   WeaponSpread: 18
+  WeaponOverheatCooldown: 10
   WeaponClipSizeMult: 5
   WeaponFireRateMult: 0.9
   WeaponSpreadMult: 9
+  WeaponOverheatCooldownMult: 0.8
+  WeaponIsOverheating: 0

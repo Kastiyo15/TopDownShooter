@@ -12,9 +12,14 @@ public class WeaponDataSO : ScriptableObject
     public int WeaponClipSize;
     public float WeaponFireRate;
     public float WeaponSpread;
+    public float WeaponOverheatCooldown;
 
     [Header("Weapon Base Stat Multipliers")]
     public int WeaponClipSizeMult;
     public float WeaponFireRateMult;
     public float WeaponSpreadMult;
+    public float WeaponOverheatCooldownMult;
+
+    [Header("Weapon Bools")]
+    public bool WeaponIsOverheating;
 }

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _panelMaster;
     [SerializeField] private GameObject _panelPauseMenu;
     [SerializeField] private GameObject _panelOptionsMenu;
+    [SerializeField] private GameObject _panelGameUI;
 
     [Header("Scene Strings")]
     [SerializeField] private string _stringMainMenu;
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
     {
         IsDead = false;
 
+        LoadJsonData(this);
+
         // Make Pause menu panels invisible
         Resume();
     }
@@ -56,6 +59,11 @@ public class GameManager : MonoBehaviour
                 Pause();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SaveJsonData(this);
+        }
     }
 
 
@@ -65,6 +73,7 @@ public class GameManager : MonoBehaviour
         _panelMaster.SetActive(false);
         _panelPauseMenu.SetActive(false);
         _panelOptionsMenu.SetActive(false);
+        _panelGameUI.SetActive(true);
 
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -81,6 +90,7 @@ public class GameManager : MonoBehaviour
         // Game Properties
         _panelMaster.SetActive(true);
         _panelPauseMenu.SetActive(true);
+        _panelGameUI.SetActive(false);
 
         Time.timeScale = 0f;
         GameIsPaused = true;

@@ -16,5 +16,5 @@ public class BulletDataSO : ScriptableObject
     [Header("Bullet Base Stat Multipliers")]
     public int BulletDamageMult;
     public float BulletVelocityMult;
-    public float BulletAmountMult;
+    public int BulletAmountMult;
 }

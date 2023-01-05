@@ -32,6 +32,11 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private int _enemyBulletPoolSize;
 
 
+    // BOOLS
+    private bool RifleBulletPoolAdded = false;
+    private bool ShotgunBulletPoolAdded = false;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -42,17 +47,39 @@ public class ObjectPool : MonoBehaviour
 
 
 
-    public void AddPlayerBulletsToPool(GameObject bulletPrefab, int poolSize)
+    public void AddPlayerBulletsToPool(int id, GameObject bulletPrefab, int poolSize)
     {
         // PLAYER BULLETS // 
-        // Create gameobjects, but set them inactive, add them to the list
-        for (int i = 0; i < poolSize; i++)
+        // So rifle should be first gun out, so add all these bullets to the pool first
+        if (id == 0 && !RifleBulletPoolAdded && !ShotgunBulletPoolAdded)
         {
-            GameObject tmp;
-            tmp = Instantiate(bulletPrefab, _parentPlayerBullets.transform);
-            tmp.SetActive(false);
-            _playerBulletPool.Add(tmp);
+            // Create gameobjects, but set them inactive, add them to the list
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject tmp;
+                tmp = Instantiate(bulletPrefab, _parentPlayerBullets.transform);
+                tmp.SetActive(false);
+                _playerBulletPool.Add(tmp);
+            }
+
+            RifleBulletPoolAdded = true;
         }
+
+        // now rifle is loaded in, added the shotgun bullets
+        if (id == 1 && RifleBulletPoolAdded && !ShotgunBulletPoolAdded)
+        {
+            // Create gameobjects, but set them inactive, add them to the list
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject tmp;
+                tmp = Instantiate(bulletPrefab, _parentPlayerBullets.transform);
+                tmp.SetActive(false);
+                _playerBulletPool.Add(tmp);
+            }
+
+            ShotgunBulletPoolAdded = true;
+        }
+
     }
 
 
