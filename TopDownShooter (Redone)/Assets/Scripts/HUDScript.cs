@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -15,7 +16,16 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private GameObject _panelAmmoCounterHUD;
     [SerializeField] private TMP_Text _txtAmmoCounter;
     [SerializeField] private Image _barAmmoBackground;
-    [SerializeField] private Image _barAmmoForeground;
+    [SerializeField] private Image _barAmmoForeground; // rifle
+    [SerializeField] private Image _barAmmoForeground2; // shotgun
+    [SerializeField] private Image _barAmmoOverheat; // rifle
+    [SerializeField] private Image _barAmmoOverheat2; // shotgun
+
+
+    private void Start()
+    {
+        DisplayAmmoBars(WeaponStatsManager.Instance.W_WeaponID);
+    }
 
 
     // Set the selected sprite on screen to display which gun is equipped
@@ -30,29 +40,97 @@ public class HUDScript : MonoBehaviour
 
 
     // Update the ammo counter HUD, including the bar
-    public void AmmoCounterHUD()
+    public void AmmoCounterHUD(int overheating)
     {
-        // check which weapon is equipped
-        // rifle
-        if (WeaponStatsManager.Instance.W_WeaponID == 0)
+        // if not overheating run this section
+        if (overheating == 0)
+        {
+            // check which weapon is equipped
+            // rifle
+            if (WeaponStatsManager.Instance.W_WeaponID == 0)
+            {
+                // Update the text
+                var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
+                _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.color = Color.white;
+
+                // Update the bar
+                _barAmmoForeground.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
+            }
+            // shotgun
+            else if (WeaponStatsManager.Instance.W_WeaponID == 1)
+            {
+                // Update the text
+                var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
+                _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.color = Color.white;
+
+                // Update the bar
+                _barAmmoForeground2.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
+            }
+        }
+        else if (overheating == 1)
         {
             // Update the text
-            var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
-            _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+            _txtAmmoCounter.SetText($"{0f}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+            _txtAmmoCounter.color = new Color(0.6078f, 0.1843f, 0.2235f, 1f);
 
-            // Update the bar
-            _barAmmoForeground.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
+            // Check which weapon is equipped
+            if (WeaponStatsManager.Instance.W_WeaponID == 0)
+            {
+                // Update the bar
+                _barAmmoForeground.fillAmount = 0f;
+            }
+            // shotgun
+            else if (WeaponStatsManager.Instance.W_WeaponID == 1)
+            {
+                // Update the bar
+                _barAmmoForeground2.fillAmount = 0f;
+            }
         }
-        // shotgun
-        else if (WeaponStatsManager.Instance.W_WeaponID == 1)
+    }
+
+
+
+    // Toggle the Activity of ammo bars depending on weapon selection
+    public void DisplayAmmoBars(int id)
+    {
+        if (id == 0)
         {
-            // Update the text
-            var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
-            _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
-
-            // Update the bar
-            _barAmmoForeground.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
-
+            _barAmmoForeground.gameObject.SetActive(true);
+            _barAmmoForeground2.gameObject.SetActive(false);
+            _barAmmoOverheat.gameObject.SetActive(true);
+            _barAmmoOverheat2.gameObject.SetActive(false);
         }
+        else if (id == 1)
+        {
+            _barAmmoForeground.gameObject.SetActive(false);
+            _barAmmoForeground2.gameObject.SetActive(true);
+            _barAmmoOverheat.gameObject.SetActive(false);
+            _barAmmoOverheat2.gameObject.SetActive(true);
+        }
+    }
+
+
+    // For loop to lerp individual overheat bars
+    public IEnumerator ActivateOverheatBar(int overheatID, float duration)
+    {
+        if (overheatID == 0)
+        {
+            for (float t = 0.0f; t < duration; t += Time.deltaTime)
+            {
+                _barAmmoOverheat.fillAmount = Mathf.Lerp(1, 0, t / duration);
+                yield return null;
+            }
+        }
+        else if (overheatID == 1)
+        {
+            for (float t = 0.0f; t < duration; t += Time.deltaTime)
+            {
+                _barAmmoOverheat2.fillAmount = Mathf.Lerp(1, 0, t / duration);
+                yield return null;
+            }
+        }
+
     }
 }

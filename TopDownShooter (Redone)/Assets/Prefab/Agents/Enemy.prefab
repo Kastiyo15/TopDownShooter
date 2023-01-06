@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7645357433810598809}
   - component: {fileID: 7645357433810598806}
   - component: {fileID: 7645357433810598810}
+  - component: {fileID: 5690036296565013063}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -152,7 +153,19 @@ MonoBehaviour:
       m_Calls: []
   Damaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5690036296565013063}
+        m_TargetAssemblyTypeName: FlashOnHit, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Died:
     m_PersistentCalls:
       m_Calls:
@@ -168,3 +181,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5690036296565013063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645357433810598807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94dc0f7173c9a743ad54358cd0dcf0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 2b7df80224f3b2744bcbda1a1d8ba370, type: 2}
+  duration: 0.1

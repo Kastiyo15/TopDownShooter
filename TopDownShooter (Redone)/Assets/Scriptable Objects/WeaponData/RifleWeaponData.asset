@@ -15,9 +15,9 @@ MonoBehaviour:
   WeaponID: 0
   WeaponName: Rifle
   WeaponClipSize: 10
-  WeaponFireRate: 0.05
+  WeaponFireRate: 0.4
   WeaponSpread: 0
-  WeaponOverheatCooldown: 1
+  WeaponOverheatCooldown: 2
   WeaponClipSizeMult: 5
   WeaponFireRateMult: 0.8
   WeaponSpreadMult: 4.5

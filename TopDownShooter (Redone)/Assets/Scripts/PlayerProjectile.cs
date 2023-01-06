@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
-
     private int _damageValue;
 
 
@@ -34,7 +33,7 @@ public class PlayerProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
         // If we hit something with a different tag, see if we can cause damage
-        if (hitInfo.tag != tag)
+        if (!hitInfo.CompareTag("RifleBullet") && !hitInfo.CompareTag("ShotgunBullet") && !hitInfo.CompareTag("Player"))
         {
             // Damage using the new Health Script
             if (hitInfo.gameObject.TryGetComponent<Health>(out var health))

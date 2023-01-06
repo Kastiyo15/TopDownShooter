@@ -77,7 +77,14 @@ public class PlayerShoot : MonoBehaviour
         #endregion
 
         // Set Ammo counter HUD
-        _scriptHUD.AmmoCounterHUD();
+        if (!_weaponController[id].WeaponData.WeaponIsOverheating)
+        {
+            _scriptHUD.AmmoCounterHUD(0);
+        }
+        else if (_weaponController[id].WeaponData.WeaponIsOverheating)
+        {
+            _scriptHUD.AmmoCounterHUD(1);
+        }
     }
 
 
@@ -91,6 +98,7 @@ public class PlayerShoot : MonoBehaviour
         Debug.Log(id);
 
         GetWeaponAndBulletStats();
+        _scriptHUD.DisplayAmmoBars(id);
     }
 
 
@@ -183,7 +191,7 @@ public class PlayerShoot : MonoBehaviour
 
                 // Access the rigidbody, in order to move the bullet
                 Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
-                rb.velocity = (bulDir * BulletStatsManager.Instance.B_BulletVelocity);
+                rb.velocity = (bulDir * (BulletStatsManager.Instance.B_BulletVelocity));
 
 
                 // Clear the render trail, so another can be made
@@ -224,17 +232,20 @@ public class PlayerShoot : MonoBehaviour
     private IEnumerator ActivateOverheatCooldown(int g)
     {
         // As soon as weapon overheats, activate this coroutine
-        // If current weapon equipped is not overheating
+        // set timer to the current weapons cooldown timer
         _overheatTimer = WeaponStatsManager.Instance.W_WeaponOverheatCooldown;
 
-
+        // trip the current weapons cooldown bool
         _weaponController[g].WeaponData.WeaponIsOverheating = true;
         Debug.Log("Weapon Overheated!");
 
+        // Activate overheat bar
+        StartCoroutine(_scriptHUD.ActivateOverheatBar(g, _overheatTimer));
 
+        // wait for the cooldown timer
         yield return new WaitForSeconds(_overheatTimer);
 
-
+        // set the current weapons bool false
         _weaponController[g].WeaponData.WeaponIsOverheating = false;
         Debug.Log("Weapon Cooled!");
     }
