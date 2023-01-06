@@ -12,9 +12,11 @@ public class BulletDataSO : ScriptableObject
     public int BulletDamage;
     public float BulletVelocity;
     public int BulletAmount;
+    public float BulletKnockbackForce;
 
     [Header("Bullet Base Stat Multipliers")]
     public int BulletDamageMult;
     public float BulletVelocityMult;
     public int BulletAmountMult;
+    public float BulletKnockbackForceMult;
 }

@@ -154,12 +154,6 @@ public class GameManager : MonoBehaviour
     {
         // Save Player Stats
         PlayerStatsManager.Instance.PopulateSaveData(a_SaveData);
-
-        /*         // Save Weapon Stats
-                WeaponStatsManager.Instance.PopulateSaveData(a_SaveData);
-
-                // Save Bullet Stats
-                BulletStatsManager.Instance.PopulateSaveData(a_SaveData); */
     }
 
 
@@ -181,12 +175,6 @@ public class GameManager : MonoBehaviour
     {
         // Load Player Stats
         PlayerStatsManager.Instance.LoadFromSaveData(a_SaveData);
-
-        /*         // Load Weapon Stats
-                WeaponStatsManager.Instance.LoadFromSaveData(a_SaveData);
-
-                // Load Bullet Stats
-                BulletStatsManager.Instance.LoadFromSaveData(a_SaveData); */
     }
     //////////////////////////////////////////////////////////////////
     // SAVING AND LOADING //

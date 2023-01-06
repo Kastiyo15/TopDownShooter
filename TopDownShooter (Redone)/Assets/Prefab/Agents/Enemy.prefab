@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7645357433810598808}
   - component: {fileID: 7645357433810598809}
   - component: {fileID: 7645357433810598806}
+  - component: {fileID: 1349745834638907635}
   - component: {fileID: 7645357433810598810}
   - component: {fileID: 5690036296565013063}
   m_Layer: 6
@@ -101,7 +102,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -135,6 +136,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &1349745834638907635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645357433810598807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f664dec83bbdea640bf52dafd2821192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {x: 0, y: 0}
+  _moveVelocity: {x: 0, y: 0}
+  _rb: {fileID: 7645357433810598809}
+  _knockbackRange: 50
+  _moveSpeed: 2
+  _stoppingDistance: 5
 --- !u!114 &7645357433810598810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40d808af51f5f24e9897e36a0e1ca4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 200
   Healed:
     m_PersistentCalls:
       m_Calls: []

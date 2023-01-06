@@ -186,6 +186,7 @@ public class PlayerShoot : MonoBehaviour
                 // Set position and rotation of the returned bullet and set it active
                 bul.transform.position = _firePoint.position;
                 bul.transform.rotation = _firePoint.rotation;
+                
                 bul.SetActive(true);
 
 
@@ -196,6 +197,9 @@ public class PlayerShoot : MonoBehaviour
 
                 // Clear the render trail, so another can be made
                 bul.GetComponent<TrailRenderer>().Clear();
+
+                // Send the bullet direction to the projectile
+                bul.GetComponent<PlayerProjectile>().GetDirection(bulDir);
 
 
                 // Increase angle before firing another bullet (if necessary)

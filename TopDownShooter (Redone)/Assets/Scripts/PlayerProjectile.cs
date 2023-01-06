@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     private int _damageValue;
+    public Vector2 ProjectileDirection;
 
 
     // Once enabled, disable after 3 seconds
@@ -35,14 +36,29 @@ public class PlayerProjectile : MonoBehaviour
         // If we hit something with a different tag, see if we can cause damage
         if (!hitInfo.CompareTag("RifleBullet") && !hitInfo.CompareTag("ShotgunBullet") && !hitInfo.CompareTag("Player"))
         {
-            // Damage using the new Health Script
+            Disable();
+
+            // Interface: Will minus damage from health of target hit
             if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
             {
                 health.Damage(_damageValue);
             }
-
-            Disable();
         }
+
+
+        // Interface: Will knock back object
+        var knockable = hitInfo.gameObject.GetComponent<IKnockable>();
+        if (knockable != null)
+        {
+            knockable.KnockedBack(ProjectileDirection);
+        }
+    }
+
+
+    // Used in the player shoot script to get the bullets direction
+    public void GetDirection(Vector2 direction)
+    {
+        ProjectileDirection = direction;
     }
 
 

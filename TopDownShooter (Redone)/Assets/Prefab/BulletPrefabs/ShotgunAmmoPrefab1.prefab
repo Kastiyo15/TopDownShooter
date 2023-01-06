@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: -2750196118683932697}
   - component: {fileID: 2730911224268158192}
   - component: {fileID: -1045289826190984860}
-  - component: {fileID: 652459318417806991}
   - component: {fileID: -2485660872088659605}
+  - component: {fileID: 652459318417806991}
   m_Layer: 0
   m_Name: ShotgunAmmoPrefab1
   m_TagString: ShotgunBullet
@@ -234,18 +234,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &652459318417806991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5448262206932121531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1284018b84b786d408f612f29d5ecb2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &-2485660872088659605
 Animator:
   serializedVersion: 4
@@ -266,3 +254,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &652459318417806991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5448262206932121531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1284018b84b786d408f612f29d5ecb2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectileDirection: {x: 0, y: 0}

@@ -27,10 +27,12 @@ public class BulletController : MonoBehaviour
         BulletStatsManager.Instance.B_BulletDamage = data.BulletDamage;
         BulletStatsManager.Instance.B_BulletVelocity = data.BulletVelocity;
         BulletStatsManager.Instance.B_BulletAmount = data.BulletAmount;
+        BulletStatsManager.Instance.B_BulletKnockbackForce = data.BulletKnockbackForce;
 
         BulletStatsManager.Instance.B_BulletDamageMult = data.BulletDamageMult;
         BulletStatsManager.Instance.B_BulletVelocityMult = data.BulletVelocityMult;
         BulletStatsManager.Instance.B_BulletAmountMult = data.BulletAmountMult;
+        BulletStatsManager.Instance.B_BulletKnockbackForceMult = data.BulletKnockbackForceMult;
 
         LoadUpdatedBulletData(data, data.BulletID);
     }
@@ -48,6 +50,7 @@ public class BulletController : MonoBehaviour
             BulletStatsManager.Instance.B_BulletDamage += PlayerStatsManager.Instance.L_TalentPointsSpentRifleBullet[0] * data.BulletDamageMult;
             BulletStatsManager.Instance.B_BulletVelocity += PlayerStatsManager.Instance.L_TalentPointsSpentRifleBullet[1] * data.BulletVelocityMult;
             BulletStatsManager.Instance.B_BulletAmount += PlayerStatsManager.Instance.L_TalentPointsSpentRifleBullet[2] * data.BulletAmountMult;
+            BulletStatsManager.Instance.B_BulletKnockbackForce += PlayerStatsManager.Instance.L_TalentPointsSpentRifleBullet[3] * data.BulletKnockbackForceMult;
         }
         // Check if shotgun
         if (id == 1)
@@ -55,6 +58,7 @@ public class BulletController : MonoBehaviour
             BulletStatsManager.Instance.B_BulletDamage += PlayerStatsManager.Instance.L_TalentPointsSpentShotgunBullet[0] * data.BulletDamageMult;
             BulletStatsManager.Instance.B_BulletVelocity += PlayerStatsManager.Instance.L_TalentPointsSpentShotgunBullet[1] * data.BulletVelocityMult;
             BulletStatsManager.Instance.B_BulletAmount += PlayerStatsManager.Instance.L_TalentPointsSpentShotgunBullet[2] * data.BulletAmountMult;
+            BulletStatsManager.Instance.B_BulletKnockbackForce += PlayerStatsManager.Instance.L_TalentPointsSpentShotgunBullet[3] * data.BulletKnockbackForceMult;
         }
     }
 }

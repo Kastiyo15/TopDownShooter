@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponID: 1
   WeaponName: Shotgun
-  WeaponClipSize: 10
-  WeaponFireRate: 1
+  WeaponClipSize: 100
+  WeaponFireRate: 0.1
   WeaponSpread: 18
   WeaponOverheatCooldown: 10
   WeaponClipSizeMult: 5
   WeaponFireRateMult: 0.9
   WeaponSpreadMult: 9
   WeaponOverheatCooldownMult: 0.8
-  WeaponIsOverheating: 0
+  WeaponIsOverheating: 1
