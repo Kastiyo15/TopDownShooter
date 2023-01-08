@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemyWaveSpawner : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private HUDScript _scriptHUD;
     [SerializeField] private Camera _cam;
     [SerializeField] private BoxArea _boxArea;
     [SerializeField] private EnemySO _enemyScriptableObject;
+
     [SerializeField] private float _waveDelay;
     public int WaveNumber;
 
@@ -26,6 +29,8 @@ public class EnemyWaveSpawner : MonoBehaviour
 
         if (WaveNumber <= 100)
         {
+            _scriptHUD.UpdateWaveHUD(WaveNumber);
+
             yield return new WaitForSeconds(spawnDelay);
 
             for (int i = 0; i <= waveSpawnCount; i++)
@@ -36,10 +41,10 @@ public class EnemyWaveSpawner : MonoBehaviour
 
                 var newSpawner = Instantiate(_enemyScriptableObject.EnemyPrefab, ((Vector2)_cam.transform.position + nextSpawnPos), Quaternion.identity);
             }
+            yield return new WaitForSeconds(_waveDelay);
+            WaveNumber++;
+            StartCoroutine(WaveSpawning());
         }
-        yield return new WaitForSeconds(_waveDelay);
-        WaveNumber++;
-        StartCoroutine(WaveSpawning());
     }
 
 

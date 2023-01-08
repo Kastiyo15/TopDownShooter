@@ -397,6 +397,11 @@ MonoBehaviour:
   _barAmmoOverheat2: {fileID: 1191205883}
   _panelScoreCounterHUD: {fileID: 159597519}
   _txtScoreCounter: {fileID: 102249750}
+  _panelWaveCounterHUD: {fileID: 188217207}
+  _txtWaveCounter: {fileID: 825548192}
+  _scriptPlayerHealth: {fileID: 1877123969}
+  _panelPlayerHealthHUD: {fileID: 1545625735}
+  _txtPlayerHealth: {fileID: 1265605723}
 --- !u!1 &101466253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2262,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1152560370}
-  - {fileID: 1564568845}
   m_Father: {fileID: 1574080506}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6296,7 +6300,7 @@ GameObject:
   - component: {fileID: 1564568845}
   - component: {fileID: 1564568846}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: EnemyWaveSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6310,12 +6314,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564568844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1564568846
 MonoBehaviour:
@@ -6329,11 +6333,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ddb433cbb39b643afaf2a9b5276553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scriptHUD: {fileID: 88812924}
   _cam: {fileID: 519420031}
   _boxArea: {fileID: 1152560369}
   _enemyScriptableObject: {fileID: 11400000, guid: 55daa6799dd0d624d8fba3aa593dc3be, type: 2}
-  _waveDelay: 10
-  WaveNumber: 50
+  _waveDelay: 2
+  WaveNumber: 99
 --- !u!1 &1574080505
 GameObject:
   m_ObjectHideFlags: 0
@@ -8072,6 +8077,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1877123968}
         m_TargetAssemblyTypeName: FlashOnHit, Assembly-CSharp
         m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 88812924}
+        m_TargetAssemblyTypeName: HUDScript, Assembly-CSharp
+        m_MethodName: UpdatePlayerHealthHUD
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

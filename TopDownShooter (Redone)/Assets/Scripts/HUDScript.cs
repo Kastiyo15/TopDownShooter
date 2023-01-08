@@ -25,12 +25,23 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private GameObject _panelScoreCounterHUD;
     [SerializeField] private TMP_Text _txtScoreCounter;
 
+    [Header("Wave Counter HUD")]
+    [SerializeField] private GameObject _panelWaveCounterHUD;
+    [SerializeField] private TMP_Text _txtWaveCounter;
+
+    [Header("Player Health HUD")]
+    [SerializeField] private Health _scriptPlayerHealth;
+    [SerializeField] private GameObject _panelPlayerHealthHUD;
+    [SerializeField] private TMP_Text _txtPlayerHealth;
+
 
     private void Start()
     {
         DisplayAmmoBars(WeaponStatsManager.Instance.W_WeaponID);
 
         UpdateScoreHUD();
+
+        UpdatePlayerHealthHUD();
     }
 
 
@@ -151,4 +162,18 @@ public class HUDScript : MonoBehaviour
     #endregion
 
 
+    #region WAVE COUNTER HUD
+    public void UpdateWaveHUD(int wave)
+    {
+        _txtWaveCounter.SetText($"WAVE: {wave}");
+    }
+    #endregion
+
+
+    #region PLAYER HEALTH HUD
+    public void UpdatePlayerHealthHUD()
+    {
+        _txtPlayerHealth.SetText($"HEALTH: {_scriptPlayerHealth.Hp}/{_scriptPlayerHealth.MaxHp}");
+    }
+    #endregion
 }
