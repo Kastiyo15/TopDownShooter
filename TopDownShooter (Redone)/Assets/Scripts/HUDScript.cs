@@ -21,13 +21,20 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private Image _barAmmoOverheat; // rifle
     [SerializeField] private Image _barAmmoOverheat2; // shotgun
 
+    [Header("Score Counter HUD")]
+    [SerializeField] private GameObject _panelScoreCounterHUD;
+    [SerializeField] private TMP_Text _txtScoreCounter;
+
 
     private void Start()
     {
         DisplayAmmoBars(WeaponStatsManager.Instance.W_WeaponID);
+
+        UpdateScoreHUD();
     }
 
 
+    #region WEAPON SELECT HUD
     // Set the selected sprite on screen to display which gun is equipped
     // Sprite list will have [Q, E, Q selected, E selected]
     public void WeaponSelectedHUD(int i)
@@ -37,8 +44,10 @@ public class HUDScript : MonoBehaviour
         // Set other button to normal sprite
         _buttonGameObjects[1 - i].GetComponent<Image>().sprite = _buttonSprites[1 - i];
     }
+    #endregion
 
 
+    #region AMMO COUNTER HUD
     // Update the ammo counter HUD, including the bar
     public void AmmoCounterHUD(int overheating)
     {
@@ -91,7 +100,6 @@ public class HUDScript : MonoBehaviour
     }
 
 
-
     // Toggle the Activity of ammo bars depending on weapon selection
     public void DisplayAmmoBars(int id)
     {
@@ -131,6 +139,16 @@ public class HUDScript : MonoBehaviour
                 yield return null;
             }
         }
-
     }
+    #endregion
+
+
+    #region SCORE COUNTER HUD
+    public void UpdateScoreHUD()
+    {
+        _txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");
+    }
+    #endregion
+
+
 }

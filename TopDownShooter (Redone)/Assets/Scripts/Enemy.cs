@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IKnockable
     [SerializeField] private float _knockbackRange;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _stoppingDistance;
+    [SerializeField] private int _scoreValue; // how much score is earned when dead
 
 
     // Just used to get information
@@ -64,4 +65,12 @@ public class Enemy : MonoBehaviour, IKnockable
         var knockForce = Random.Range(Mathf.Round(BulletStatsManager.Instance.B_BulletKnockbackForce / 5f), BulletStatsManager.Instance.B_BulletKnockbackForce);
         _rb.AddForce(direction * knockForce, ForceMode2D.Impulse);
     }
+
+
+    // Code to run when this gameobject dies
+    public void OnEnemyDeath()
+    {
+        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+    }
+
 }

@@ -154,6 +154,7 @@ MonoBehaviour:
   _knockbackRange: 50
   _moveSpeed: 2
   _stoppingDistance: 5
+  _scoreValue: 3
 --- !u!114 &7645357433810598810
 MonoBehaviour:
   m_ObjectHideFlags: 0

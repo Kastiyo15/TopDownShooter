@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Statuc Bools")]
+    [Header("Static Bools")]
     public static bool GameIsPaused = false;
     public static bool IsDead = false;
 
@@ -65,6 +65,24 @@ public class GameManager : MonoBehaviour
             SaveJsonData(this);
         }
     }
+
+
+    // Set IsDead true when player dies (called in the player Died Event)
+    public void PlayerIsDead()
+    {
+        IsDead = true;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     public void Resume()
@@ -128,8 +146,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Quitting Game...");
         Application.Quit();
     }
-
-
 
 
 

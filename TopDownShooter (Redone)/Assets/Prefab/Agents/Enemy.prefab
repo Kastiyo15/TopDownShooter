@@ -154,6 +154,7 @@ MonoBehaviour:
   _knockbackRange: 50
   _moveSpeed: 2
   _stoppingDistance: 5
+  _scoreValue: 1
 --- !u!114 &7645357433810598810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +189,18 @@ MonoBehaviour:
   Died:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1349745834638907635}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: OnEnemyDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 7645357433810598807}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
