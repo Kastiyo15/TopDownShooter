@@ -38,20 +38,31 @@ public class PlayerProjectile : MonoBehaviour
         {
             Disable();
 
+
             // Interface: Will minus damage from health of target hit
             if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
             {
                 health.Damage(_damageValue);
             }
-        }
 
+
+            // Interface: Will knock back object
+            var knockable = hitInfo.gameObject.GetComponent<IKnockable>();
+            if (knockable != null)
+            {
+                knockable.KnockedBack(ProjectileDirection);
+            }
+
+
+        }
 
         // Interface: Will knock back object
-        var knockable = hitInfo.gameObject.GetComponent<IKnockable>();
-        if (knockable != null)
+        var hittable = hitInfo.gameObject.GetComponent<IHittable>();
+        if (hittable != null)
         {
-            knockable.KnockedBack(ProjectileDirection);
+            hittable.OnHit();
         }
+
     }
 
 

@@ -74,17 +74,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public void Resume()
     {
         // Game Properties

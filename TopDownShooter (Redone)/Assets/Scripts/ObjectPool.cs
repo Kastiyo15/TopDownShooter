@@ -14,22 +14,12 @@ public class ObjectPool : MonoBehaviour
 
     [Header("Player Pools")]
     // Pool Player Bullets
-    [SerializeField] private GameObject _playerBullet;
     private List<GameObject> _playerBulletPool = new List<GameObject>();
-    [SerializeField] public int _playerBulletPoolSize;
 
 
     [Header("Enemy Pools")]
     // Pool Enemy Agents
-    [SerializeField] private GameObject _enemyAgent;
-    private List<GameObject> _enemyAgentPool;
-    [SerializeField] private int _enemyAgentPoolSize;
-
-
-    // Pool Enemy Bullets
-    [SerializeField] private GameObject _enemyBullet;
-    private List<GameObject> _enemyBulletPool;
-    [SerializeField] private int _enemyBulletPoolSize;
+    private List<GameObject> _enemyAgentPool = new List<GameObject>();
 
 
     // BOOLS
@@ -113,5 +103,59 @@ public class ObjectPool : MonoBehaviour
         }
 
         return null;
+    }
+
+
+
+    public void AddEnemyAgentsToPool(int poolSize, int enemyTypes, EnemySO[] enemyArray)
+    {
+        // run a for loop, add 1 agent of each type to the pool at a time
+        // decreasing a variable after each time someone is added
+        // Stop when variable = poolsize
+
+        int enemyCounter = poolSize;
+
+        for (int i = 0; _enemyAgentPool.Count < poolSize; i++)
+        {
+            for (int j = 0; j < enemyTypes && enemyCounter > 0; j++)
+            {
+                GameObject tmp;
+                tmp = Instantiate(enemyArray[j].EnemyPrefab, _parentEnemyAgent.transform);
+                tmp.SetActive(false);
+                _enemyAgentPool.Add(tmp);
+                enemyCounter--;
+            }
+        }
+    }
+
+
+    public GameObject GetEnemyAgentsFromPool(int poolSize)
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            // check if enemy agent matching the id is active in hierarchy
+            if (!_enemyAgentPool[i].activeInHierarchy)
+            {
+                return _enemyAgentPool[i];
+            }
+        }
+
+        return null;
+    }
+
+
+    public int GetActiveEnemyAgents()
+    {
+        var activeAgents = 0;
+
+        foreach (GameObject enemy in _enemyAgentPool)
+        {
+            if (enemy.activeInHierarchy)
+            {
+                activeAgents++;
+            }
+        }
+
+        return activeAgents;
     }
 }

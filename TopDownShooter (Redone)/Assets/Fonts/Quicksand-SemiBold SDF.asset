@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Quicksand-SemiBold SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 768776470
   material: {fileID: 4721743328519767467}
-  materialHashCode: 0
+  materialHashCode: 193640182
   m_Version: 1.1.0
   m_SourceFontFileGUID: dbc7d31cd90cce04cbc3d45c5f2ac4e8
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: dbc7d31cd90cce04cbc3d45c5f2ac4e8, type: 3}
@@ -2625,9 +2625,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.875
+    - _ScaleRatioB: 0.7109375
+    - _ScaleRatioC: 0.7109375
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0

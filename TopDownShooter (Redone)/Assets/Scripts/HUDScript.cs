@@ -71,7 +71,7 @@ public class HUDScript : MonoBehaviour
             {
                 // Update the text
                 var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
-                _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.SetText($"AMMO: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
                 _txtAmmoCounter.color = Color.white;
 
                 // Update the bar
@@ -82,7 +82,7 @@ public class HUDScript : MonoBehaviour
             {
                 // Update the text
                 var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
-                _txtAmmoCounter.SetText($"{currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.SetText($"AMMO: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
                 _txtAmmoCounter.color = Color.white;
 
                 // Update the bar
@@ -92,7 +92,7 @@ public class HUDScript : MonoBehaviour
         else if (overheating == 1)
         {
             // Update the text
-            _txtAmmoCounter.SetText($"{0f}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+            _txtAmmoCounter.SetText($"OVERHEATING!");
             _txtAmmoCounter.color = new Color(0.6078f, 0.1843f, 0.2235f, 1f);
 
             // Check which weapon is equipped
@@ -173,7 +173,7 @@ public class HUDScript : MonoBehaviour
     #region PLAYER HEALTH HUD
     public void UpdatePlayerHealthHUD()
     {
-        _txtPlayerHealth.SetText($"HEALTH: {_scriptPlayerHealth.Hp}/{_scriptPlayerHealth.MaxHp}");
+        _txtPlayerHealth.SetText($"HP: {_scriptPlayerHealth.Hp}/{_scriptPlayerHealth.MaxHp}");
     }
     #endregion
 }

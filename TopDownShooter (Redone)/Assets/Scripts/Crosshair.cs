@@ -30,10 +30,10 @@ public class Crosshair : MonoBehaviour
             this.transform.position = _mousePos;
             #endregion
 
-            if (DetectEnemy())
+/*             if (DetectEnemy())
             {
                 Debug.Log("Target Position: ");
-            }
+            } */
         }
         return;
     }

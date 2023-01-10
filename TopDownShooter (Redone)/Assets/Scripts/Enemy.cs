@@ -2,15 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IKnockable
+public class Enemy : MonoBehaviour, IKnockable, IHittable
 {
     [SerializeField] private Vector2 _target;
     [SerializeField] private Vector2 _moveVelocity;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private SpriteRenderer _sr;
+    [SerializeField] private Material _originalMaterial;
     [SerializeField] private float _knockbackRange;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _stoppingDistance;
     [SerializeField] private int _scoreValue; // how much score is earned when dead
+    [SerializeField] private FlashOnHit _scriptFlash;
+    [SerializeField] private Health _scriptHealth;
+
+
+    // Once enabled, disable after 3 seconds
+    private void OnEnable()
+    {
+        _sr.material = _originalMaterial;
+        _scriptFlash.StopAllCoroutines();
+        _scriptHealth.Adjust(_scriptHealth.MaxHp);
+    } 
 
 
     // Just used to get information
@@ -68,9 +81,27 @@ public class Enemy : MonoBehaviour, IKnockable
 
 
     // Code to run when this gameobject dies
-    public void OnEnemyDeath()
+    public void OnHit()
     {
-        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+        if (_scriptHealth.Hp > 0)
+        {
+            _scriptFlash.Flash();
+        }
     }
 
+
+    public void Disable()
+    {
+        _scriptFlash.StopAllCoroutines();
+        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+
+        gameObject.SetActive(false);
+    }
+
+
+    // once disabled, stop invoking
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
 }

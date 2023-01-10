@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0e46a8c395a03764d88ef23e11704411, type: 3}
-  m_Color: {r: 0.65882355, g: 0.43412942, b: 0.172549, a: 0.8745098}
+  m_Color: {r: 0.6156863, g: 0.43989205, b: 0.19215687, a: 0.8745098}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -151,10 +151,14 @@ MonoBehaviour:
   _target: {x: 0, y: 0}
   _moveVelocity: {x: 0, y: 0}
   _rb: {fileID: 7645357433810598809}
+  _sr: {fileID: 7645357433810598808}
+  _originalMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   _knockbackRange: 50
   _moveSpeed: 2
   _stoppingDistance: 5
   _scoreValue: 3
+  _scriptFlash: {fileID: 5690036296565013063}
+  _scriptHealth: {fileID: 7645357433810598810}
 --- !u!114 &7645357433810598810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,26 +177,14 @@ MonoBehaviour:
       m_Calls: []
   Damaged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5690036296565013063}
-        m_TargetAssemblyTypeName: FlashOnHit, Assembly-CSharp
-        m_MethodName: Flash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   Died:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7645357433810598807}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1349745834638907635}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -215,3 +207,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 2b7df80224f3b2744bcbda1a1d8ba370, type: 2}
   duration: 0.1
+  originalMaterial: {fileID: 0}

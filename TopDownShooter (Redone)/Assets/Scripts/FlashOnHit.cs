@@ -22,7 +22,7 @@ public class FlashOnHit : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     // The material that was in use, when the script started.
-    private Material originalMaterial;
+    public Material originalMaterial;
 
     // The currently running coroutine.
     private Coroutine flashRoutine;

@@ -120,7 +120,7 @@ public class PlayerShoot : MonoBehaviour
         if (!_weaponController[id].WeaponData.WeaponIsOverheating)
         {
             IsShootable = false;
-            Debug.Log("Shooting");
+            //Debug.Log("Shooting");
 
 
             #region BULLET SPREAD SCRIPT
@@ -177,7 +177,7 @@ public class PlayerShoot : MonoBehaviour
                 if (bul == null)
                 {
                     StartCoroutine(ActivateOverheatCooldown(id));
-                    Debug.Log("Shooting Stopped");
+                    //Debug.Log("Shooting Stopped");
                     IsShootable = true;
                     yield break;
                     //yield return new WaitForSeconds(WeaponStatsManager.Instance.W_WeaponFireRate);
@@ -212,7 +212,7 @@ public class PlayerShoot : MonoBehaviour
             // Wait 'weapon fire rate', before allowing code to be run again
             yield return new WaitForSeconds(WeaponStatsManager.Instance.W_WeaponFireRate);
 
-            Debug.Log("Shooting Stopped");
+            //Debug.Log("Shooting Stopped");
             IsShootable = true;
         }
     }
