@@ -8,6 +8,10 @@ TagManager:
   - RifleBullet
   - ShotgunBullet
   - Spawner
+  - RoomSpawnPoint
+  - Rooms
+  - RoomTrigger
+  - RoomTemplate
   layers:
   - Default
   - TransparentFX
