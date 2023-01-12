@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     [SerializeField] private int _scoreValue; // how much score is earned when dead
     [SerializeField] private FlashOnHit _scriptFlash;
     [SerializeField] private Health _scriptHealth;
+    [SerializeField] private EnemyWaveSpawner _scriptEnemyWaveSpawner;
 
 
     // Once enabled, disable after 3 seconds
@@ -23,7 +24,8 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
         _sr.material = _originalMaterial;
         _scriptFlash.StopAllCoroutines();
         _scriptHealth.Adjust(_scriptHealth.MaxHp);
-    } 
+        _scriptEnemyWaveSpawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemyWaveSpawner>();
+    }
 
 
     // Just used to get information
@@ -92,9 +94,6 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
 
     public void Disable()
     {
-        _scriptFlash.StopAllCoroutines();
-        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
-
         gameObject.SetActive(false);
     }
 
@@ -102,6 +101,9 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     // once disabled, stop invoking
     private void OnDisable()
     {
+        _scriptFlash.StopAllCoroutines();
+        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+        _scriptEnemyWaveSpawner.DecreaseEnemiesRemaining();
         CancelInvoke();
     }
 }

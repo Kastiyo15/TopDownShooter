@@ -5,6 +5,7 @@ using UnityEngine;
 public class Crosshair : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private LayerMask _layermask;
 
     private Vector3 _mousePos;
     private RaycastHit2D _hit;
@@ -30,10 +31,14 @@ public class Crosshair : MonoBehaviour
             this.transform.position = _mousePos;
             #endregion
 
-/*             if (DetectEnemy())
+            if (DetectEnemy())
             {
-                Debug.Log("Target Position: ");
-            } */
+                _animator.SetTrigger("OnHover");
+            }
+            else
+            {
+                _animator.SetTrigger("Normal");
+            }
         }
         return;
     }
@@ -41,20 +46,16 @@ public class Crosshair : MonoBehaviour
 
     private bool DetectEnemy()
     {
-        int _layerMask = LayerMask.GetMask("Enemy");
-
         //Check if the laser hit something
-        RaycastHit2D hit = Physics2D.Raycast(_mousePos, Vector2.zero, _layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(_mousePos, Vector2.zero, Vector3.Distance(_mousePos, Vector2.zero), _layermask);
 
         //If the object is not null
-        if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+        if (hit.collider != null)
         {
-            _animator.SetTrigger("OnHover");
             return true;
         }
         else
         {
-            _animator.SetTrigger("Normal");
             return false;
         }
     }

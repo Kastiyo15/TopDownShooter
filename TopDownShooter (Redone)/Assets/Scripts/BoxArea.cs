@@ -6,8 +6,6 @@ using UnityEngine;
 public class BoxArea : MonoBehaviour
 {
     [SerializeField] private Vector2 _size;
-    [SerializeField] private Camera _cam;
-
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

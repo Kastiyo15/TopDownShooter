@@ -165,6 +165,7 @@ public class HUDScript : MonoBehaviour
     #region WAVE COUNTER HUD
     public void UpdateWaveHUD(int wave)
     {
+        _txtWaveCounter.gameObject.SetActive(true);
         _txtWaveCounter.SetText($"WAVE: {wave}");
     }
     #endregion

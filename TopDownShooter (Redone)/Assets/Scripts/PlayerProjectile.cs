@@ -34,7 +34,7 @@ public class PlayerProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
         // If we hit something with a different tag, see if we can cause damage
-        if (!hitInfo.CompareTag("RifleBullet") && !hitInfo.CompareTag("ShotgunBullet") && !hitInfo.CompareTag("Player"))
+        if (hitInfo.CompareTag("Enemy") || hitInfo.CompareTag("Obstacle"))
         {
             Disable();
 

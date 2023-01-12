@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7645357433810598807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.1
 --- !u!114 &1349745834638907635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   _scoreValue: 1
   _scriptFlash: {fileID: 5690036296565013063}
   _scriptHealth: {fileID: 7645357433810598810}
+  _scriptEnemyWaveSpawner: {fileID: 0}
 --- !u!114 &7645357433810598810
 MonoBehaviour:
   m_ObjectHideFlags: 0

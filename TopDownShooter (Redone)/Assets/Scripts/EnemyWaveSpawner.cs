@@ -10,6 +10,7 @@ public class EnemyWaveSpawner : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private BoxArea _boxArea;
     [SerializeField] private EnemySO[] _enemyScriptableObject;
+    public Vector2 RoomCentre;
 
     [Header("Debug Purposes")]
     [SerializeField] private float spawnDelay;
@@ -17,47 +18,91 @@ public class EnemyWaveSpawner : MonoBehaviour
     [SerializeField] private int _arrayLength;
 
     [Header("Keep Track Of")]
-    [SerializeField] private bool _waveComplete = true;
+    public bool WaveResting; // TRUE when player is wandering around room, before Start Wave
+    public bool WaveStarted; // TRUE when player walks in room trigger
+    public bool WaveComplete; // TRUE when player kills all enemies in the wave
     [SerializeField] private float _waveDelay;
-    [SerializeField] public int EnemiesRemaining = 0;
+    public int EnemiesRemaining = 0;
     public int WaveNumber;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _boxArea.GetRandomPoint();
-
-        StartCoroutine(WaveSpawning());
-        StartCoroutine(GetEnemyCount());
-
-        _arrayLength = _enemyScriptableObject.Length;
+        EndWave();
+        RoomCentre = new Vector2(0f, 0f); // initialise this variable
+        _arrayLength = _enemyScriptableObject.Length; // initialise length of array variable
     }
 
 
-    private IEnumerator GetEnemyCount()
+    private void Update()
     {
-        while (true)
+        if (WaveStarted && EnemiesRemaining == 0)
         {
-            EnemiesRemaining = ObjectPool.Instance.GetActiveEnemyAgents();
-
-            if (EnemiesRemaining == 0)
-            {
-                _waveComplete = true;
-            }
-
-            yield return new WaitForSeconds(0.01f);
+            EndWave();
         }
     }
+
+
+    public void DecreaseEnemiesRemaining()
+    {
+        EnemiesRemaining--;
+    }
+
+
+    // Called from RoomTrigger
+    public void GetRoomCentre(Vector2 roomPosition)
+    {
+        RoomCentre = roomPosition;
+        _boxArea.gameObject.transform.position = roomPosition;
+    }
+
+
+    // Called from RoomTrigger
+    public void StartWave()
+    {
+        EnemiesRemaining = -1; // Stop the code firing when it = 0
+        WaveResting = false;
+        WaveStarted = true;
+        WaveComplete = false;
+
+        StartCoroutine(WaveSpawning());
+    }
+
+
+    private void EndWave()
+    {
+        print("EndWave");
+        WaveResting = true;
+        WaveStarted = false;
+        WaveComplete = true;
+    }
+
+
+    private void GetEnemyCount()
+    {
+        EnemiesRemaining = waveSpawnCount;
+    }
+
+
+    /*     private IEnumerator GetEnemyCount()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(spawnDelay);
+
+                EnemiesRemaining = ObjectPool.Instance.GetActiveEnemyAgents();
+
+                if (WaveStarted && EnemiesRemaining == 0)
+                {
+                    EndWave();
+                }
+            }
+        } */
 
 
     private IEnumerator WaveSpawning()
     {
-        while (!_waveComplete)
-        {
-            yield return null;
-        }
-
         if (WaveNumber <= 100)
         {
             spawnDelay = GetSpawnDelay();
@@ -69,6 +114,7 @@ public class EnemyWaveSpawner : MonoBehaviour
             // Add enemy SO into the object pool, removing the ones from previous wave
             ObjectPool.Instance.AddEnemyAgentsToPool(waveSpawnCount, _arrayLength, _enemyScriptableObject);
 
+            GetEnemyCount();
 
             for (int i = 0; i < waveSpawnCount; i++)
             {
@@ -80,21 +126,16 @@ public class EnemyWaveSpawner : MonoBehaviour
                 var newSpawn = ObjectPool.Instance.GetEnemyAgentsFromPool(waveSpawnCount);
                 newSpawn.SetActive(true);
 
-                newSpawn.transform.position = ((Vector2)_cam.transform.position + nextSpawnPos);
+                newSpawn.transform.position = (RoomCentre + nextSpawnPos);
             }
-
-            _waveComplete = false;
-
             WaveNumber++;
-
-            StartCoroutine(WaveSpawning());
         }
     }
 
 
     private float GetSpawnDelay()
     {
-        var startingDelay = 3f;
+        var startingDelay = 2f;
         var finalDelay = 0.5f;
         var maxWave = 100;
         return (WaveNumber >= 0 && WaveNumber <= maxWave) ? (1f / (Mathf.Pow(maxWave, 2)) * (startingDelay - finalDelay) * Mathf.Pow(WaveNumber - maxWave, 2)) : finalDelay;
@@ -103,7 +144,7 @@ public class EnemyWaveSpawner : MonoBehaviour
 
     private int GetSpawnCount()
     {
-        var startingCount = 10;
+        var startingCount = 1;
         var finalCount = 60;
         var maxWave = 100;
         return (WaveNumber >= 0 && WaveNumber <= maxWave) ? Mathf.RoundToInt(1f / (Mathf.Pow(maxWave, 2)) * (finalCount - startingCount) * Mathf.Pow(WaveNumber, 2)) + startingCount : finalCount;

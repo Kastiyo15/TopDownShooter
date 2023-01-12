@@ -12,6 +12,8 @@ TagManager:
   - Rooms
   - RoomTrigger
   - RoomTemplate
+  - RoomChecker
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
+  - RoomColliders
   - 
   - 
   - 
