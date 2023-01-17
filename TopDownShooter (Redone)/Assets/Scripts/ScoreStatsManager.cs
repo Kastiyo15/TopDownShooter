@@ -8,14 +8,6 @@ using UnityEngine;
 public class ScoreStatsManager : MonoBehaviour
 {
     public static ScoreStatsManager Instance { get; private set; }
-    /*  #region PLAYER SCORE STATS
-        [Header("Score Stats")]
-        public int S_TotalScore; // total score collected 
-        public int S_ScorePerKill; // score gained from killing any enemy
-        public int S_TimerScore; // Score gained every time the timer goes down
-        public float S_Timer; // When reaches zero, add TimerScore
-        public int S_MaximumMultiplier; // highest score multiplier player can reach
-        #endregion */
 
     // t_ stands for total
     [Header("Scores To Keep Note Of")]
@@ -23,7 +15,7 @@ public class ScoreStatsManager : MonoBehaviour
     [SerializeField] private int t_killScore = 0; // Total score gained from kills
     [SerializeField] private int t_timerScore = 0; // Total score gained from the timer
     [SerializeField] private int t_waveScore = 0; // Total Score gained from each wave completed
-    
+
 
     [Header("Temporary Scores")]
     [SerializeField] private int _waveScore; // Score gained from each wave completed
@@ -68,6 +60,16 @@ public class ScoreStatsManager : MonoBehaviour
     {
         // Multiply enemy's score value by the players score per kill value
         t_killScore += _scorePerKill * enemyValue;
+
+        // update the total run score
+        UpdateTotalRunScore();
+    }
+
+
+    public void AddWaveScore(int waveValue)
+    {
+        // Add the wave value
+        t_waveScore += waveValue;
 
         // update the total run score
         UpdateTotalRunScore();

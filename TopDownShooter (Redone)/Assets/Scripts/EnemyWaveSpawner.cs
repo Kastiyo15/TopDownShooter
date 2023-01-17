@@ -76,6 +76,8 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveResting = true;
         WaveStarted = false;
         WaveComplete = true;
+
+        ScoreStatsManager.Instance.AddWaveScore(WaveNumber * 10);
     }
 
 
@@ -83,22 +85,6 @@ public class EnemyWaveSpawner : MonoBehaviour
     {
         EnemiesRemaining = waveSpawnCount;
     }
-
-
-    /*     private IEnumerator GetEnemyCount()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(spawnDelay);
-
-                EnemiesRemaining = ObjectPool.Instance.GetActiveEnemyAgents();
-
-                if (WaveStarted && EnemiesRemaining == 0)
-                {
-                    EndWave();
-                }
-            }
-        } */
 
 
     private IEnumerator WaveSpawning()

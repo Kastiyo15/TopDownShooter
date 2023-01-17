@@ -119,9 +119,11 @@ public class PlayerShoot : MonoBehaviour
     {
         if (!_weaponController[id].WeaponData.WeaponIsOverheating)
         {
+            // Shake the camera when shooting
+            CinemachineShake.Instance.ShakeCamera((Mathf.Clamp(BulletStatsManager.Instance.B_BulletKnockbackForce / 5f, 0f, 10f)), 0.2f);
+
             IsShootable = false;
             //Debug.Log("Shooting");
-
 
             #region BULLET SPREAD SCRIPT
 
@@ -143,7 +145,7 @@ public class PlayerShoot : MonoBehaviour
 
                 // _angleStep = (_endAngle - _startAngle) / _bulletController[id].BulletData.BulletAmount;
                 _angleStep = ((2 * WeaponStatsManager.Instance.W_WeaponSpread) / (BulletStatsManager.Instance.B_BulletAmount));
-                _angle = _startAngle - WeaponStatsManager.Instance.W_WeaponSpread;
+                _angle = _startAngle;
             }
 
             // If shotgun, then give accurate spray, no randomness
@@ -187,13 +189,14 @@ public class PlayerShoot : MonoBehaviour
                 // Set position and rotation of the returned bullet and set it active
                 bul.transform.position = _firePoint.position;
                 bul.transform.rotation = _firePoint.rotation;
-                
+
                 bul.SetActive(true);
 
 
-                // Access the rigidbody, in order to move the bullet
+                // Access the rigidbody, in order to move the bullet, and add it ot player velocity
+                Vector2 playerVelocity = gameObject.GetComponent<Player>().Rb.velocity;
                 Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
-                rb.velocity = (bulDir * (BulletStatsManager.Instance.B_BulletVelocity));
+                rb.velocity = (bulDir * (BulletStatsManager.Instance.B_BulletVelocity + (playerVelocity.magnitude * 0.5f)));
 
 
                 // Clear the render trail, so another can be made
@@ -202,12 +205,18 @@ public class PlayerShoot : MonoBehaviour
                 // Send the bullet direction to the projectile
                 bul.GetComponent<PlayerProjectile>().GetDirection(bulDir);
 
-
                 // Increase angle before firing another bullet (if necessary)
                 _angle += _angleStep;
+
+                // Interface: Will knock back player
+                var knockable = gameObject.GetComponent<IKnockable>();
+                var knockForceMultiplier = 3f;
+                if (knockable != null)
+                {
+                    knockable.KnockedBack(bulDir, Random.Range(BulletStatsManager.Instance.B_BulletKnockbackForce * knockForceMultiplier, BulletStatsManager.Instance.B_BulletKnockbackForce * knockForceMultiplier * 2f));
+                }
             }
             #endregion
-
 
             // Wait 'weapon fire rate', before allowing code to be run again
             yield return new WaitForSeconds(WeaponStatsManager.Instance.W_WeaponFireRate);

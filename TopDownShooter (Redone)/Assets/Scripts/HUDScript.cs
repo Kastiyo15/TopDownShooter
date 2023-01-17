@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DamageNumbersPro;
 
 
 public class HUDScript : MonoBehaviour
@@ -24,6 +25,8 @@ public class HUDScript : MonoBehaviour
     [Header("Score Counter HUD")]
     [SerializeField] private GameObject _panelScoreCounterHUD;
     [SerializeField] private TMP_Text _txtScoreCounter;
+    [SerializeField] private GameObject _panelScorePopupLocation;
+    [SerializeField] private DamageNumber _txtScorePopup;
 
     [Header("Wave Counter HUD")]
     [SerializeField] private GameObject _panelWaveCounterHUD;
@@ -70,9 +73,10 @@ public class HUDScript : MonoBehaviour
             if (WeaponStatsManager.Instance.W_WeaponID == 0)
             {
                 // Update the text
-                var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
-                _txtAmmoCounter.SetText($"AMMO: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
-                _txtAmmoCounter.color = Color.white;
+                //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
+                var currentClip = (WeaponStatsManager.Instance.W_CurrentRifleClip);
+                _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.color = new Color(1f, 1f, 1f, 0.75f);
 
                 // Update the bar
                 _barAmmoForeground.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
@@ -81,9 +85,10 @@ public class HUDScript : MonoBehaviour
             else if (WeaponStatsManager.Instance.W_WeaponID == 1)
             {
                 // Update the text
-                var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
-                _txtAmmoCounter.SetText($"AMMO: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
-                _txtAmmoCounter.color = Color.white;
+                //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
+                var currentClip = (WeaponStatsManager.Instance.W_CurrentShotgunClip);
+                _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
+                _txtAmmoCounter.color = new Color(1f, 1f, 1f, 0.75f);
 
                 // Update the bar
                 _barAmmoForeground2.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
@@ -159,6 +164,12 @@ public class HUDScript : MonoBehaviour
     {
         _txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");
     }
+
+
+    //public void ScorePopupText(int amount)
+    //{
+    //    _txtScorePopup.Spawn(_panelScorePopupLocation.transform.position + Vector3.up, amount);
+    //}
     #endregion
 
 

@@ -16,9 +16,9 @@ MonoBehaviour:
   BulletName: Default Rifle Ammo
   BulletPrefab: {fileID: 6455864102353421636, guid: a01780060cee1b24bb7bdd1091b30708, type: 3}
   BulletDamage: 50
-  BulletVelocity: 15
+  BulletVelocity: 18
   BulletAmount: 1
-  BulletKnockbackForce: 5
+  BulletKnockbackForce: 15
   BulletDamageMult: 25
   BulletVelocityMult: 1.5
   BulletAmountMult: 1

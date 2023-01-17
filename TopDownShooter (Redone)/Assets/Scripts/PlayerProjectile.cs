@@ -12,18 +12,17 @@ public class PlayerProjectile : MonoBehaviour
     {
         // when enabled, set the damage of the bullet to the current equipped weapon
         _damageValue = BulletStatsManager.Instance.B_BulletDamage;
-
-
+        
         // decrease the respective bullet counters
         // rifle
         if (CompareTag("RifleBullet"))
         {
-            WeaponStatsManager.Instance.W_CurrentRifleClip--;
+            WeaponStatsManager.Instance.W_CurrentRifleClip++;
         }
         // shotgun
         if (CompareTag("ShotgunBullet"))
         {
-            WeaponStatsManager.Instance.W_CurrentShotgunClip--;
+            WeaponStatsManager.Instance.W_CurrentShotgunClip++;
         }
 
 
@@ -38,31 +37,27 @@ public class PlayerProjectile : MonoBehaviour
         {
             Disable();
 
-
             // Interface: Will minus damage from health of target hit
             if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
             {
                 health.Damage(_damageValue);
-            }
 
+
+                // Interface: Will knock back object
+                var hittable = hitInfo.gameObject.GetComponent<IHittable>();
+                if (hittable != null)
+                {
+                    hittable.OnHit(_damageValue);
+                }
+            }
 
             // Interface: Will knock back object
             var knockable = hitInfo.gameObject.GetComponent<IKnockable>();
             if (knockable != null)
             {
-                knockable.KnockedBack(ProjectileDirection);
+                knockable.KnockedBack(ProjectileDirection, Random.Range(Mathf.Round(BulletStatsManager.Instance.B_BulletKnockbackForce / 5f), BulletStatsManager.Instance.B_BulletKnockbackForce));
             }
-
-
         }
-
-        // Interface: Will knock back object
-        var hittable = hitInfo.gameObject.GetComponent<IHittable>();
-        if (hittable != null)
-        {
-            hittable.OnHit();
-        }
-
     }
 
 
@@ -87,12 +82,12 @@ public class PlayerProjectile : MonoBehaviour
         // rifle
         if (CompareTag("RifleBullet"))
         {
-            WeaponStatsManager.Instance.W_CurrentRifleClip++;
+            WeaponStatsManager.Instance.W_CurrentRifleClip--;
         }
         // shotgun
         if (CompareTag("ShotgunBullet"))
         {
-            WeaponStatsManager.Instance.W_CurrentShotgunClip++;
+            WeaponStatsManager.Instance.W_CurrentShotgunClip--;
         }
 
         CancelInvoke();

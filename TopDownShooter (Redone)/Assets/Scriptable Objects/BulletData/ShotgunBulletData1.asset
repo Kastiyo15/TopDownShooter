@@ -15,10 +15,10 @@ MonoBehaviour:
   BulletID: 1
   BulletName: Default Shotgun Ammo
   BulletPrefab: {fileID: 5448262206932121531, guid: c5a4be0e44f37364eacf81805441fab9, type: 3}
-  BulletDamage: 35
-  BulletVelocity: 15
-  BulletAmount: 5
-  BulletKnockbackForce: 10
+  BulletDamage: 45
+  BulletVelocity: 14
+  BulletAmount: 10
+  BulletKnockbackForce: 500
   BulletDamageMult: 14
   BulletVelocityMult: 1.5
   BulletAmountMult: 2

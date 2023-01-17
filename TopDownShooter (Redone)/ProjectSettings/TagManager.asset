@@ -14,6 +14,8 @@ TagManager:
   - RoomTemplate
   - RoomChecker
   - Obstacle
+  - Cinemachine
+  - RoomWallsParent
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - UI
   - Enemy
   - RoomColliders
-  - 
+  - Player
   - 
   - 
   - 
@@ -48,11 +50,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2204673635
+    locked: 0
   - name: Trail
     uniqueID: 990808429
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Enemy
+    uniqueID: 1366675743
     locked: 0
   - name: UI
     uniqueID: 2518431913

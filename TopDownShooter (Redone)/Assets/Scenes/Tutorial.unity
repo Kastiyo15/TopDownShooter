@@ -2468,8 +2468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b491fdf806a2be4883b1812a5a11fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _panelMaster: {fileID: 0}
   _panelPauseMenu: {fileID: 1351349842}
   _panelOptionsMenu: {fileID: 2098776300}
+  _panelGameUI: {fileID: 0}
   _stringMainMenu: MainMenu
   _stringGameScene: GameScene
 --- !u!1 &763853653
@@ -3060,7 +3062,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
