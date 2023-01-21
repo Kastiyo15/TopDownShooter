@@ -75,7 +75,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!1 &3386330013670252040
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,8 +144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2b0ed62a8c0566543a8e0b671a608064, type: 2}
-  m_sharedMaterial: {fileID: 7289268264693402991, guid: 2b0ed62a8c0566543a8e0b671a608064, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa6ba003519543443aa76521a4f0264a, type: 2}
+  m_sharedMaterial: {fileID: -2570664117761980012, guid: fa6ba003519543443aa76521a4f0264a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -169,13 +169,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11
+  m_fontSize: 12
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 11
-  m_fontSizeMax: 11
-  m_fontStyle: 1
+  m_fontSizeMax: 12
+  m_fontStyle: 33
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 0
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

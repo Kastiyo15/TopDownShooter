@@ -80,8 +80,9 @@ public class ScoreStatsManager : MonoBehaviour
     // Adds up all scores to the Total Run Score
     private void UpdateTotalRunScore()
     {
+        var currentScore = t_runScore;
         t_runScore = t_killScore + t_timerScore + t_waveScore;
-        s_HUDScript.UpdateScoreHUD();
+        StartCoroutine(s_HUDScript.UpdateScoreHUD(currentScore));
     }
 
 
@@ -90,8 +91,4 @@ public class ScoreStatsManager : MonoBehaviour
     {
         PlayerStatsManager.Instance.S_TotalScore += t_runScore;
     }
-
-
-
-
 }

@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     {
         if (Vector2.Distance(_rb.position, _target) > _stoppingDistance)
         {
-           // _rb.position = Vector2.MoveTowards(_rb.position, _target, _moveSpeed * Time.deltaTime);
+            // _rb.position = Vector2.MoveTowards(_rb.position, _target, _moveSpeed * Time.deltaTime);
             _rb.velocity += _lookDir * _moveSpeed * Time.fixedDeltaTime;
         }
     }
@@ -113,8 +113,13 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     // once disabled, stop invoking
     private void OnDisable()
     {
-        ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
-        _scriptEnemyWaveSpawner.DecreaseEnemiesRemaining();
+        if (_scriptEnemyWaveSpawner.WaveStarted)
+        {
+            CareerStatsManager.Instance.UpdateEnemiesKilled();
+            ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+            _scriptEnemyWaveSpawner.DecreaseEnemiesRemaining();
+        }
+        
         CancelInvoke();
     }
 }

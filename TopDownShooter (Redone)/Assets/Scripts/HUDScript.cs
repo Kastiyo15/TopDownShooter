@@ -13,6 +13,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private List<GameObject> _buttonGameObjects = new List<GameObject>();
     [SerializeField] private List<Sprite> _buttonSprites = new List<Sprite>();
     [SerializeField] private TMP_Text _txtWeaponName;
+    [SerializeField] private TMP_Text _txtWeaponDamage;
 
     [Header("Ammo Counter HUD")]
     [SerializeField] private GameObject _panelAmmoCounterHUD;
@@ -33,6 +34,10 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private GameObject _panelWaveCounterHUD;
     [SerializeField] private TMP_Text _txtWaveCounter;
 
+    [Header("Enemy Counter HUD")]
+    [SerializeField] private TMP_Text _txtEnemyCounter;
+    [SerializeField] private TMP_Text _txtEnemyKillsCounter;
+
     [Header("Player Health HUD")]
     [SerializeField] private Health _scriptPlayerHealth;
     [SerializeField] private GameObject _panelPlayerHealthHUD;
@@ -43,7 +48,7 @@ public class HUDScript : MonoBehaviour
     {
         DisplayAmmoBars(WeaponStatsManager.Instance.W_WeaponID);
 
-        UpdateScoreHUD();
+        StartCoroutine(UpdateScoreHUD(0));
 
         UpdatePlayerHealthHUD();
     }
@@ -60,6 +65,12 @@ public class HUDScript : MonoBehaviour
         _buttonGameObjects[1 - i].GetComponent<Image>().sprite = _buttonSprites[1 - i];
 
         _txtWeaponName.SetText($"{WeaponStatsManager.Instance.W_WeaponName}");
+
+        int damageValue = BulletStatsManager.Instance.B_BulletDamage;
+        int damageMin = damageValue - (Mathf.FloorToInt(damageValue / 10));
+        int damageMax = damageValue + (Mathf.FloorToInt(damageValue / 10));
+
+        _txtWeaponDamage.SetText($"{damageMin} - {damageMax}");
     }
     #endregion
 
@@ -162,9 +173,18 @@ public class HUDScript : MonoBehaviour
 
 
     #region SCORE COUNTER HUD
-    public void UpdateScoreHUD()
+    public IEnumerator UpdateScoreHUD(int score)
     {
-        _txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");
+        var duration = 0.5f;
+        //_txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");   
+        for (float t = 0.0f; t < duration; t += Time.deltaTime)
+        {
+            var currentScore = Mathf.RoundToInt(Mathf.Lerp(score, ScoreStatsManager.Instance.t_runScore, t / duration));
+            currentScore = Mathf.RoundToInt(currentScore);
+            _txtScoreCounter.SetText($"{currentScore}");
+            yield return null;
+        }
+        _txtScoreCounter.SetText($"{ScoreStatsManager.Instance.t_runScore}");
     }
 
 
@@ -178,8 +198,26 @@ public class HUDScript : MonoBehaviour
     #region WAVE COUNTER HUD
     public void UpdateWaveHUD(int wave)
     {
-        _txtWaveCounter.gameObject.SetActive(true);
-        _txtWaveCounter.SetText($"WAVE: {wave}");
+        if (!_panelWaveCounterHUD.activeInHierarchy)
+        {
+            _panelWaveCounterHUD.SetActive(true);
+        }
+        //_txtWaveCounter.gameObject.SetActive(true);
+        _txtWaveCounter.SetText($"{wave}");
+    }
+    #endregion
+
+
+    #region ENEMY COUNTER HUD
+    public void UpdateKillsRemaining(int amount)
+    {
+        _txtEnemyCounter.SetText($"{amount}");
+    }
+
+
+    public void UpdateKillsThisRun()
+    {
+        _txtEnemyKillsCounter.SetText($"{CareerStatsManager.Instance.t_EnemiesKilled}");
     }
     #endregion
 

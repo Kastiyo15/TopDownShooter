@@ -29,7 +29,10 @@ public class EnemyWaveSpawner : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        EndWave();
+        WaveResting = true;
+        WaveStarted = false;
+        WaveComplete = true;
+        
         RoomCentre = new Vector2(0f, 0f); // initialise this variable
         _arrayLength = _enemyScriptableObject.Length; // initialise length of array variable
     }
@@ -47,6 +50,8 @@ public class EnemyWaveSpawner : MonoBehaviour
     public void DecreaseEnemiesRemaining()
     {
         EnemiesRemaining--;
+        _scriptHUD.UpdateKillsRemaining(EnemiesRemaining);
+        _scriptHUD.UpdateKillsThisRun();
     }
 
 
@@ -84,6 +89,7 @@ public class EnemyWaveSpawner : MonoBehaviour
     private void GetEnemyCount()
     {
         EnemiesRemaining = waveSpawnCount;
+        _scriptHUD.UpdateKillsRemaining(EnemiesRemaining);
     }
 
 
