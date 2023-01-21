@@ -15,7 +15,7 @@ MonoBehaviour:
   EnemyID: 1
   EnemyName: Enemy_1
   EnemyPrefab: {fileID: 7645357433810598807, guid: b0dd8e356eed6e54e8a47294915192d0, type: 3}
-  EnemyHealth: 100
+  EnemyHealth: 200
   EnemyMoveSpeed: 3
   EnemyAttackPower: 50
   EnemyScoreValue: 1

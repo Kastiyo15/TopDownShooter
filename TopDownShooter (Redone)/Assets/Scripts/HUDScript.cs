@@ -12,6 +12,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private GameObject _panelWeaponsHUD;
     [SerializeField] private List<GameObject> _buttonGameObjects = new List<GameObject>();
     [SerializeField] private List<Sprite> _buttonSprites = new List<Sprite>();
+    [SerializeField] private TMP_Text _txtWeaponName;
 
     [Header("Ammo Counter HUD")]
     [SerializeField] private GameObject _panelAmmoCounterHUD;
@@ -57,6 +58,8 @@ public class HUDScript : MonoBehaviour
         _buttonGameObjects[i].GetComponent<Image>().sprite = _buttonSprites[i + 2];
         // Set other button to normal sprite
         _buttonGameObjects[1 - i].GetComponent<Image>().sprite = _buttonSprites[1 - i];
+
+        _txtWeaponName.SetText($"{WeaponStatsManager.Instance.W_WeaponName}");
     }
     #endregion
 
@@ -76,10 +79,10 @@ public class HUDScript : MonoBehaviour
                 //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
                 var currentClip = (WeaponStatsManager.Instance.W_CurrentRifleClip);
                 _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
-                _txtAmmoCounter.color = new Color(1f, 1f, 1f, 0.75f);
 
                 // Update the bar
-                _barAmmoForeground.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
+                var barFillAmount = _barAmmoForeground.fillAmount;
+                _barAmmoForeground.fillAmount = Mathf.Lerp(barFillAmount, (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize, Time.deltaTime * 5f);
             }
             // shotgun
             else if (WeaponStatsManager.Instance.W_WeaponID == 1)
@@ -88,17 +91,16 @@ public class HUDScript : MonoBehaviour
                 //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
                 var currentClip = (WeaponStatsManager.Instance.W_CurrentShotgunClip);
                 _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
-                _txtAmmoCounter.color = new Color(1f, 1f, 1f, 0.75f);
 
                 // Update the bar
-                _barAmmoForeground2.fillAmount = (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize;
+                var barFillAmount2 = _barAmmoForeground2.fillAmount;
+                _barAmmoForeground2.fillAmount = Mathf.Lerp(barFillAmount2, (float)currentClip / (float)WeaponStatsManager.Instance.W_WeaponClipSize, Time.deltaTime * 5f);
             }
         }
         else if (overheating == 1)
         {
             // Update the text
             _txtAmmoCounter.SetText($"OVERHEATING!");
-            _txtAmmoCounter.color = new Color(0.6078f, 0.1843f, 0.2235f, 1f);
 
             // Check which weapon is equipped
             if (WeaponStatsManager.Instance.W_WeaponID == 0)
@@ -186,6 +188,28 @@ public class HUDScript : MonoBehaviour
     public void UpdatePlayerHealthHUD()
     {
         _txtPlayerHealth.SetText($"HP: {_scriptPlayerHealth.Hp}/{_scriptPlayerHealth.MaxHp}");
+    }
+    #endregion
+
+
+    #region ABILITY BARS HUD
+    public void AbilityBarCoolDown(Image coolDownBar, Image abilityIcon, float coolDownTimer, Image activeMarker, TMP_Text hotkeyText)
+    {
+        hotkeyText.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        coolDownBar.fillAmount = Mathf.Lerp(0, 1, coolDownTimer);
+        abilityIcon.color = Color.grey;
+        activeMarker.color = new Color(0.2f, 0.2f, 0.2f, 1f);
+    }
+
+
+    public void AbilityBarReady(Image coolDownBar, Image abilityIcon, Sprite abilitySprite, Image activeMarker, TMP_Text hotkeyText, KeyCode hotkey)
+    {
+        hotkeyText.SetText($"{hotkey}");
+        hotkeyText.color = new Color(1f, 1f, 1f, 0.75f);
+        coolDownBar.fillAmount = 0f;
+        abilityIcon.sprite = abilitySprite;
+        abilityIcon.color = Color.white;
+        activeMarker.color = new Color(0f, 0.48f, 0.84f, 1f);
     }
     #endregion
 }

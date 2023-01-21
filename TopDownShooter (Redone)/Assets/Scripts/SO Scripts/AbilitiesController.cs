@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 // TODO: add an array of [unlocked abilities] and an array of [locked abilities]
@@ -11,6 +11,7 @@ public class AbilitiesController : MonoBehaviour
     public Ability Ability;
     float cooldownTime;
     float activeTime;
+    public KeyCode key;
 
     enum AbilityState
     {
@@ -20,7 +21,23 @@ public class AbilitiesController : MonoBehaviour
     }
     AbilityState state = AbilityState.ready;
 
-    public KeyCode key;
+
+    [SerializeField] private GameObject PlayerGameObject;
+    [SerializeField] private HUDScript HUD;
+    [SerializeField] private Image cooldownBar;
+    [SerializeField] private Image abilityIcon;
+    [SerializeField] private TMP_Text hotkeyText;
+    [SerializeField] private Image activeMarker;
+
+
+
+    private void Start()
+    {
+        if (abilityIcon.sprite == null)
+        {
+            HUD.AbilityBarReady(cooldownBar, abilityIcon, Ability.icon, activeMarker, hotkeyText, key);
+        }
+    }
 
 
     // Update is called once per frame
@@ -31,7 +48,7 @@ public class AbilitiesController : MonoBehaviour
             case AbilityState.ready:
                 if (Input.GetKeyDown(key))
                 {
-                    Ability.Activate(gameObject);
+                    Ability.Activate(PlayerGameObject);
                     state = AbilityState.active;
                     activeTime = Ability.activeTime;
                 }
@@ -43,7 +60,7 @@ public class AbilitiesController : MonoBehaviour
                 }
                 else
                 {
-                    Ability.BeginCooldown(gameObject);
+                    Ability.BeginCooldown(PlayerGameObject);
                     state = AbilityState.cooldown;
                     cooldownTime = Ability.cooldownTime;
                 }
@@ -52,10 +69,12 @@ public class AbilitiesController : MonoBehaviour
                 if (cooldownTime > 0)
                 {
                     cooldownTime -= Time.deltaTime;
+                    HUD.AbilityBarCoolDown(cooldownBar, abilityIcon, cooldownTime, activeMarker, hotkeyText);
                 }
                 else
                 {
                     state = AbilityState.ready;
+                    HUD.AbilityBarReady(cooldownBar, abilityIcon, Ability.icon, activeMarker, hotkeyText, key);
                 }
                 break;
         }

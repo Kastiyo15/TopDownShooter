@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     private int _damageValue;
+    public int DamageMin;
+    public int DamageMax;
     public Vector2 ProjectileDirection;
 
 
@@ -12,6 +14,8 @@ public class PlayerProjectile : MonoBehaviour
     {
         // when enabled, set the damage of the bullet to the current equipped weapon
         _damageValue = BulletStatsManager.Instance.B_BulletDamage;
+        DamageMin = _damageValue - (Mathf.FloorToInt(_damageValue / 10));
+        DamageMax = _damageValue + (Mathf.FloorToInt(_damageValue / 10));
         
         // decrease the respective bullet counters
         // rifle
@@ -40,14 +44,16 @@ public class PlayerProjectile : MonoBehaviour
             // Interface: Will minus damage from health of target hit
             if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
             {
-                health.Damage(_damageValue);
+                var randDamageNumber = Random.Range(DamageMin, DamageMax);
+
+                health.Damage(randDamageNumber);
 
 
                 // Interface: Will knock back object
                 var hittable = hitInfo.gameObject.GetComponent<IHittable>();
                 if (hittable != null)
                 {
-                    hittable.OnHit(_damageValue);
+                    hittable.OnHit(randDamageNumber);
                 }
             }
 

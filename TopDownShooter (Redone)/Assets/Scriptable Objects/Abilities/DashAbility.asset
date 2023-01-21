@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Dash
   cooldownTime: 2
   activeTime: 0.2
+  icon: {fileID: 21300000, guid: f4f62f2d6aa4fbc459e1ed2e11d5b7c0, type: 3}
   DashVelocity: 400

@@ -37,13 +37,13 @@ public class Player : MonoBehaviour, IKnockable
     // Update is called once per frame
     private void Update()
     {
-        CheckDirectionFacing();
+        //CheckDirectionFacing();
         GetPlayerMovement();
         GetPlayerRotation();
     }
 
 
-    private void CheckDirectionFacing()
+/*     private void CheckDirectionFacing()
     {
         if (transform.rotation.eulerAngles.z > 240 && transform.rotation.eulerAngles.z < 300)
         {
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour, IKnockable
             IsFacingSouth = false;
             IsFacingWest = false;
         }
-    }
+    } */
 
 
     // Update the new input vectors
@@ -163,14 +163,14 @@ public class Player : MonoBehaviour, IKnockable
         }
     }
 
-
+/* 
     public void MoveParallel()
     {
         if (MoveVelocity.x != 0)
         {
             moveInlineWithMouse = MoveVelocity;
         }
-    }
+    } */
 
 
     // Knock back the Player when shooting

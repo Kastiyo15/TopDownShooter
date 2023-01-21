@@ -26,9 +26,9 @@ public class Crosshair : MonoBehaviour
             _mousePos = MouseUtils.GetMousePosition2d();
 
             // Rotate the crosshair for fun
-            transform.Rotate(Vector3.forward * 0.1f);
+            //_crosshairImage.transform.Rotate(Vector3.forward * 0.1f);
 
-            this.transform.position = _mousePos;
+            transform.position = _mousePos;
             #endregion
 
             if (DetectEnemy())
