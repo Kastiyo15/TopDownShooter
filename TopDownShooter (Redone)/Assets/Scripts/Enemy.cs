@@ -115,11 +115,28 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     {
         if (_scriptEnemyWaveSpawner.WaveStarted)
         {
+            // Add to killed counter
             CareerStatsManager.Instance.UpdateEnemiesKilled();
+
+            // Add to score
             ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);
+
+            // Decrease enemies alive counter in the wave spawner
             _scriptEnemyWaveSpawner.DecreaseEnemiesRemaining();
+
+            // Add xp to weapon and player
+            LevelManager.Instance.GainExperience(LevelManager.Instance.m_Player, Random.Range(45, 55));
+            
+            if (WeaponStatsManager.Instance.W_WeaponID == 0)
+            {
+                LevelManager.Instance.GainExperience(LevelManager.Instance.m_Rifle, Random.Range(45, 55));
+            }
+            else if (WeaponStatsManager.Instance.W_WeaponID == 1)
+            {
+                LevelManager.Instance.GainExperience(LevelManager.Instance.m_Shotgun, Random.Range(45, 55));
+            }
         }
-        
+
         CancelInvoke();
     }
 }

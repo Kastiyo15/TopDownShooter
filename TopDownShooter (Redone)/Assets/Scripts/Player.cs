@@ -43,37 +43,37 @@ public class Player : MonoBehaviour, IKnockable
     }
 
 
-/*     private void CheckDirectionFacing()
-    {
-        if (transform.rotation.eulerAngles.z > 240 && transform.rotation.eulerAngles.z < 300)
+    /*     private void CheckDirectionFacing()
         {
-            IsFacingEast = true;
-            IsFacingSouth = false;
-            IsFacingWest = false;
-            IsFacingNorth = false;
-        }
-        else if (transform.rotation.eulerAngles.z > 120 && transform.rotation.eulerAngles.z < 240)
-        {
-            IsFacingSouth = true;
-            IsFacingEast = false;
-            IsFacingWest = false;
-            IsFacingNorth = false;
-        }
-        else if (transform.rotation.eulerAngles.z > 60 && transform.rotation.eulerAngles.z < 120)
-        {
-            IsFacingWest = true;
-            IsFacingEast = false;
-            IsFacingSouth = false;
-            IsFacingNorth = false;
-        }
-        else
-        {
-            IsFacingNorth = true;
-            IsFacingEast = false;
-            IsFacingSouth = false;
-            IsFacingWest = false;
-        }
-    } */
+            if (transform.rotation.eulerAngles.z > 240 && transform.rotation.eulerAngles.z < 300)
+            {
+                IsFacingEast = true;
+                IsFacingSouth = false;
+                IsFacingWest = false;
+                IsFacingNorth = false;
+            }
+            else if (transform.rotation.eulerAngles.z > 120 && transform.rotation.eulerAngles.z < 240)
+            {
+                IsFacingSouth = true;
+                IsFacingEast = false;
+                IsFacingWest = false;
+                IsFacingNorth = false;
+            }
+            else if (transform.rotation.eulerAngles.z > 60 && transform.rotation.eulerAngles.z < 120)
+            {
+                IsFacingWest = true;
+                IsFacingEast = false;
+                IsFacingSouth = false;
+                IsFacingNorth = false;
+            }
+            else
+            {
+                IsFacingNorth = true;
+                IsFacingEast = false;
+                IsFacingSouth = false;
+                IsFacingWest = false;
+            }
+        } */
 
 
     // Update the new input vectors
@@ -163,14 +163,14 @@ public class Player : MonoBehaviour, IKnockable
         }
     }
 
-/* 
-    public void MoveParallel()
-    {
-        if (MoveVelocity.x != 0)
+    /* 
+        public void MoveParallel()
         {
-            moveInlineWithMouse = MoveVelocity;
-        }
-    } */
+            if (MoveVelocity.x != 0)
+            {
+                moveInlineWithMouse = MoveVelocity;
+            }
+        } */
 
 
     // Knock back the Player when shooting

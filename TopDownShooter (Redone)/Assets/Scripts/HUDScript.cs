@@ -43,6 +43,10 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private GameObject _panelPlayerHealthHUD;
     [SerializeField] private TMP_Text _txtPlayerHealth;
 
+    [Header("HUD Groups")]
+    [SerializeField] private GameObject _topHUD;
+    [SerializeField] private GameObject _centralHUD;
+
 
     private void Start()
     {
@@ -51,6 +55,22 @@ public class HUDScript : MonoBehaviour
         StartCoroutine(UpdateScoreHUD(0));
 
         UpdatePlayerHealthHUD();
+
+        HideHUD();
+    }
+
+
+    private void HideHUD()
+    {
+        _topHUD.SetActive(false);
+        _centralHUD.SetActive(false);
+    }
+
+
+    private void ShowHUD()
+    {
+        _topHUD.SetActive(true);
+        _centralHUD.SetActive(true);
     }
 
 
@@ -198,9 +218,9 @@ public class HUDScript : MonoBehaviour
     #region WAVE COUNTER HUD
     public void UpdateWaveHUD(int wave)
     {
-        if (!_panelWaveCounterHUD.activeInHierarchy)
+        if (!_topHUD.activeInHierarchy)
         {
-            _panelWaveCounterHUD.SetActive(true);
+            ShowHUD();
         }
         //_txtWaveCounter.gameObject.SetActive(true);
         _txtWaveCounter.SetText($"{wave}");
