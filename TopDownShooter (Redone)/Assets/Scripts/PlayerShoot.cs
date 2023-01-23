@@ -63,12 +63,15 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ChangeWeapon(-1); // minus 1 from weapon selector value
+            LevelManager.Instance.HideWeaponBars(WeaponStatsManager.Instance.W_WeaponID);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             ChangeWeapon(1); // add 1 from weapon selector value
+            LevelManager.Instance.HideWeaponBars(WeaponStatsManager.Instance.W_WeaponID);
 
+            // Used to add bullets to item pool only once
             if (once)
             {
                 changedWeapon = true;
@@ -254,7 +257,7 @@ public class PlayerShoot : MonoBehaviour
         Debug.Log("Weapon Overheated!");
 
         // Activate overheat bar
-        StartCoroutine(_scriptHUD.ActivateOverheatBar(g, _overheatTimer));
+        _scriptHUD.StartCoroutine(_scriptHUD.ActivateOverheatBar(g, _overheatTimer));
 
         // wait for the cooldown timer
         yield return new WaitForSeconds(_overheatTimer);

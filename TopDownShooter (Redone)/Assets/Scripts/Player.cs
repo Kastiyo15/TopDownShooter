@@ -7,7 +7,6 @@ public class Player : MonoBehaviour, IKnockable
 {
     [Header("References")]
     [SerializeField] private Camera _cam;
-    [SerializeField] private AbilitiesController _abilityHolder;
     [HideInInspector] public Rigidbody2D Rb;
 
     [HideInInspector] public float MovementSpeed;
@@ -30,7 +29,6 @@ public class Player : MonoBehaviour, IKnockable
     {
         Rb = GetComponent<Rigidbody2D>();
         MovementSpeed = NormalMovementSpeed;
-        _abilityHolder = gameObject.GetComponent<AbilitiesController>();
     }
 
 

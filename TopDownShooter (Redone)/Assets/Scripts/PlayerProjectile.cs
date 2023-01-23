@@ -7,7 +7,14 @@ public class PlayerProjectile : MonoBehaviour
     public int DamageMin;
     public int DamageMax;
     public Vector2 ProjectileDirection;
+    public enum BulletType
+    {
+        Rifle,
+        Shotgun
+    }
 
+    public BulletType type;
+    private int _bulletID;
 
     // Once enabled, disable after 3 seconds
     private void OnEnable()
@@ -16,19 +23,21 @@ public class PlayerProjectile : MonoBehaviour
         _damageValue = BulletStatsManager.Instance.B_BulletDamage;
         DamageMin = _damageValue - (Mathf.FloorToInt(_damageValue / 10));
         DamageMax = _damageValue + (Mathf.FloorToInt(_damageValue / 10));
-        
+
+
         // decrease the respective bullet counters
         // rifle
-        if (CompareTag("RifleBullet"))
+        if (type == BulletType.Rifle)
         {
             WeaponStatsManager.Instance.W_CurrentRifleClip++;
+            _bulletID = 0;
         }
         // shotgun
-        if (CompareTag("ShotgunBullet"))
+        if (type == BulletType.Shotgun)
         {
             WeaponStatsManager.Instance.W_CurrentShotgunClip++;
+            _bulletID = 1;
         }
-
 
         Invoke("Disable", 2f);
     }
@@ -54,6 +63,7 @@ public class PlayerProjectile : MonoBehaviour
                 if (hittable != null)
                 {
                     hittable.OnHit(randDamageNumber);
+                    hittable.BulletType(_bulletID);
                 }
             }
 
@@ -86,12 +96,12 @@ public class PlayerProjectile : MonoBehaviour
     {
         // increase the respective bullet counters
         // rifle
-        if (CompareTag("RifleBullet"))
+        if (type == BulletType.Rifle)
         {
             WeaponStatsManager.Instance.W_CurrentRifleClip--;
         }
         // shotgun
-        if (CompareTag("ShotgunBullet"))
+        if (type == BulletType.Shotgun)
         {
             WeaponStatsManager.Instance.W_CurrentShotgunClip--;
         }

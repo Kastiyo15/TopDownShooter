@@ -82,7 +82,7 @@ public class ScoreStatsManager : MonoBehaviour
     {
         var currentScore = t_runScore;
         t_runScore = t_killScore + t_timerScore + t_waveScore;
-        StartCoroutine(s_HUDScript.UpdateScoreHUD(currentScore));
+        s_HUDScript.StartCoroutine(s_HUDScript.UpdateScoreHUD(currentScore));
     }
 
 

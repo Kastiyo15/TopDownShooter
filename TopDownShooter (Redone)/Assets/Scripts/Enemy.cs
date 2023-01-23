@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
     [SerializeField] private float _stoppingDistance;
     [SerializeField] private int _scoreValue; // how much score is earned when dead
     private Vector2 _lookDir;
+    [SerializeField] private int _hitByBulletID;
 
     [Header("References")]
     [SerializeField] private Health _scriptHealth;
@@ -92,15 +93,21 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
 
 
     // Code to run when this gameobject dies
-    public void OnHit(int damageValue)
+    public void OnHit(int amount)
     {
-        _damagePrefab.Spawn(transform.position + Vector3.up, damageValue);
+        _damagePrefab.Spawn(transform.position + Vector3.up, amount);
 
         if (_scriptHealth.Hp > 0)
         {
             _animatorEnemy.SetTrigger("OnHit");
             _animatorEnemy.SetInteger("ID", _iD);
         }
+    }
+
+
+    public void BulletType(int id)
+    {
+        _hitByBulletID = id;
     }
 
 
@@ -126,12 +133,12 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
 
             // Add xp to weapon and player
             LevelManager.Instance.GainExperience(LevelManager.Instance.m_Player, Random.Range(45, 55));
-            
-            if (WeaponStatsManager.Instance.W_WeaponID == 0)
+
+            if (_hitByBulletID == 0)
             {
                 LevelManager.Instance.GainExperience(LevelManager.Instance.m_Rifle, Random.Range(45, 55));
             }
-            else if (WeaponStatsManager.Instance.W_WeaponID == 1)
+            else if (_hitByBulletID == 1)
             {
                 LevelManager.Instance.GainExperience(LevelManager.Instance.m_Shotgun, Random.Range(45, 55));
             }

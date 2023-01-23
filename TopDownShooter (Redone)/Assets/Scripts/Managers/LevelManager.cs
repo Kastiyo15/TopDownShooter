@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class LevelManager : MonoBehaviour
@@ -17,12 +19,20 @@ public class LevelManager : MonoBehaviour
         [Range(1000f, 10000f)] public float AdditionMult;
         [Range(2f, 16f)] public float PowerMult;
         [Range(7f, 28f)] public float DivisionMult;
+        public XPBar BarXP;
+    }
+
+
+    [System.Serializable]
+    public class XPBar
+    {
+        public Image Background, SlowBar, Foreground;
+        public TMP_Text XPText, LevelText;
     }
 
 
     [Header("Player Level Data")]
     public LevelData m_Player = new LevelData();
-
 
     [Header("Weapon Level Data")]
     public LevelData m_Rifle = new LevelData();
@@ -42,12 +52,16 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         m_Player.RequiredXp = CalculateRequiredXp(m_Player);
+        StartCoroutine(UpdateXPBar(m_Player));
+
         m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
+        StartCoroutine(UpdateXPBar(m_Rifle));
+
         m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
+        StartCoroutine(UpdateXPBar(m_Shotgun));
     }
 
 
-    // Update is called once per frame
     private int CalculateRequiredXp(LevelData data)
     {
         int solveForRequiredXp = 0;
@@ -63,41 +77,70 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            GainExperience(m_Player, Random.Range(30, 100));
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            GainExperience(m_Rifle, Random.Range(30, 100));
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            GainExperience(m_Shotgun, Random.Range(30, 100));
-        }
-    }
-
-
     // Add experience flat rate
     public void GainExperience(LevelData data, float xpGained)
     {
-        Debug.Log("Exp Gained");
         data.CurrentXp += xpGained;
 
         while (data.CurrentXp >= data.RequiredXp)
         {
             LevelUp(data);
         }
+
+        StopCoroutine(UpdateXPBar(data));
+        StartCoroutine(UpdateXPBar(data));
     }
 
 
+    // Increase level and add talent points, and calculate xp for next level
     private void LevelUp(LevelData data)
     {
         data.Level++;
         data.TalentPoints++;
         data.CurrentXp -= data.RequiredXp;
         data.RequiredXp = CalculateRequiredXp(data);
+    }
+
+
+    // Set the fill amount to current xp value
+    public IEnumerator UpdateXPBar(LevelData data)
+    {
+        data.BarXP.LevelText.SetText($"{data.Level}");
+
+        data.BarXP.Foreground.fillAmount = data.CurrentXp / data.RequiredXp;
+        data.BarXP.XPText.SetText($"XP: {data.CurrentXp} / {data.RequiredXp}");
+
+        float duration = 0.25f;
+        if (data.BarXP.SlowBar.fillAmount != data.BarXP.Foreground.fillAmount)
+        {
+            for (float t = 0.0f; t < duration; t += Time.deltaTime)
+            {
+                data.BarXP.SlowBar.fillAmount = Mathf.Lerp(data.BarXP.SlowBar.fillAmount, data.BarXP.Foreground.fillAmount, t);
+                yield return null;
+            }
+        }
+        yield break;
+    }
+
+
+    public void HideWeaponBars(int id)
+    {
+        switch (id)
+        {
+            case (0):
+                m_Shotgun.BarXP.SlowBar.gameObject.SetActive(false);
+                m_Shotgun.BarXP.Foreground.gameObject.SetActive(false);
+                m_Rifle.BarXP.SlowBar.gameObject.SetActive(true);
+                m_Rifle.BarXP.Foreground.gameObject.SetActive(true);
+                StartCoroutine(UpdateXPBar(m_Rifle));
+                break;
+            case (1):
+                m_Rifle.BarXP.SlowBar.gameObject.SetActive(false);
+                m_Rifle.BarXP.Foreground.gameObject.SetActive(false);
+                m_Shotgun.BarXP.SlowBar.gameObject.SetActive(true);
+                m_Shotgun.BarXP.Foreground.gameObject.SetActive(true);
+                StartCoroutine(UpdateXPBar(m_Shotgun));
+                break;
+        }
     }
 }

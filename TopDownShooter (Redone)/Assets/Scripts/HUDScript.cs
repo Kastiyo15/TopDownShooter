@@ -9,15 +9,11 @@ using DamageNumbersPro;
 public class HUDScript : MonoBehaviour
 {
     [Header("Weapon Select HUD")]
-    [SerializeField] private GameObject _panelWeaponsHUD;
-    [SerializeField] private List<GameObject> _buttonGameObjects = new List<GameObject>();
     [SerializeField] private List<Sprite> _buttonSprites = new List<Sprite>();
     [SerializeField] private TMP_Text _txtWeaponName;
     [SerializeField] private TMP_Text _txtWeaponDamage;
 
     [Header("Ammo Counter HUD")]
-    [SerializeField] private GameObject _panelAmmoCounterHUD;
-    [SerializeField] private TMP_Text _txtAmmoCounter;
     [SerializeField] private Image _barAmmoBackground;
     [SerializeField] private Image _barAmmoForeground; // rifle
     [SerializeField] private Image _barAmmoForeground2; // shotgun
@@ -25,9 +21,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private Image _barAmmoOverheat2; // shotgun
 
     [Header("Score Counter HUD")]
-    [SerializeField] private GameObject _panelScoreCounterHUD;
     [SerializeField] private TMP_Text _txtScoreCounter;
-    [SerializeField] private GameObject _panelScorePopupLocation;
     [SerializeField] private DamageNumber _txtScorePopup;
 
     [Header("Wave Counter HUD")]
@@ -79,18 +73,13 @@ public class HUDScript : MonoBehaviour
     // Sprite list will have [Q, E, Q selected, E selected]
     public void WeaponSelectedHUD(int i)
     {
-        // Set selected sprite
-        _buttonGameObjects[i].GetComponent<Image>().sprite = _buttonSprites[i + 2];
-        // Set other button to normal sprite
-        _buttonGameObjects[1 - i].GetComponent<Image>().sprite = _buttonSprites[1 - i];
-
         _txtWeaponName.SetText($"{WeaponStatsManager.Instance.W_WeaponName}");
 
         int damageValue = BulletStatsManager.Instance.B_BulletDamage;
         int damageMin = damageValue - (Mathf.FloorToInt(damageValue / 10));
         int damageMax = damageValue + (Mathf.FloorToInt(damageValue / 10));
 
-        _txtWeaponDamage.SetText($"{damageMin} - {damageMax}");
+        _txtWeaponDamage.SetText($" {damageMin} - {damageMax}");
     }
     #endregion
 
@@ -107,9 +96,7 @@ public class HUDScript : MonoBehaviour
             if (WeaponStatsManager.Instance.W_WeaponID == 0)
             {
                 // Update the text
-                //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentRifleClip);
                 var currentClip = (WeaponStatsManager.Instance.W_CurrentRifleClip);
-                _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
 
                 // Update the bar
                 var barFillAmount = _barAmmoForeground.fillAmount;
@@ -119,9 +106,7 @@ public class HUDScript : MonoBehaviour
             else if (WeaponStatsManager.Instance.W_WeaponID == 1)
             {
                 // Update the text
-                //var currentClip = (WeaponStatsManager.Instance.W_WeaponClipSize) + (WeaponStatsManager.Instance.W_CurrentShotgunClip);
                 var currentClip = (WeaponStatsManager.Instance.W_CurrentShotgunClip);
-                _txtAmmoCounter.SetText($"HEAT: {currentClip}/{WeaponStatsManager.Instance.W_WeaponClipSize}");
 
                 // Update the bar
                 var barFillAmount2 = _barAmmoForeground2.fillAmount;
@@ -130,9 +115,6 @@ public class HUDScript : MonoBehaviour
         }
         else if (overheating == 1)
         {
-            // Update the text
-            _txtAmmoCounter.SetText($"OVERHEATING!");
-
             // Check which weapon is equipped
             if (WeaponStatsManager.Instance.W_WeaponID == 0)
             {
@@ -195,7 +177,7 @@ public class HUDScript : MonoBehaviour
     #region SCORE COUNTER HUD
     public IEnumerator UpdateScoreHUD(int score)
     {
-        var duration = 0.5f;
+        var duration = 0.25f;
         //_txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");   
         for (float t = 0.0f; t < duration; t += Time.deltaTime)
         {
@@ -206,12 +188,6 @@ public class HUDScript : MonoBehaviour
         }
         _txtScoreCounter.SetText($"{ScoreStatsManager.Instance.t_runScore}");
     }
-
-
-    //public void ScorePopupText(int amount)
-    //{
-    //    _txtScorePopup.Spawn(_panelScorePopupLocation.transform.position + Vector3.up, amount);
-    //}
     #endregion
 
 
