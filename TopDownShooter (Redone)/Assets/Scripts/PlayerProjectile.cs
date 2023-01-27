@@ -39,6 +39,9 @@ public class PlayerProjectile : MonoBehaviour
             _bulletID = 1;
         }
 
+        // Add to bullets fired counter
+        CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.BulletsFired);
+
         Invoke("Disable", 2f);
     }
 
@@ -56,6 +59,9 @@ public class PlayerProjectile : MonoBehaviour
                 var randDamageNumber = Random.Range(DamageMin, DamageMax);
 
                 health.Damage(randDamageNumber);
+                
+                // Add to total damage value
+                CareerStatsManager.Instance.UpdateTotalDamage(randDamageNumber);
 
 
                 // Interface: Will knock back object
@@ -64,6 +70,9 @@ public class PlayerProjectile : MonoBehaviour
                 {
                     hittable.OnHit(randDamageNumber);
                     hittable.BulletType(_bulletID);
+
+                    // Add to bullets hit counter
+                    CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.BulletsHit);
                 }
             }
 

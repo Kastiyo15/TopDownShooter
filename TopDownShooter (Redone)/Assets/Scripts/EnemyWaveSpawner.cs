@@ -66,6 +66,8 @@ public class EnemyWaveSpawner : MonoBehaviour
     // Called from RoomTrigger
     public void StartWave()
     {
+        GameManager.EnteredFirstRoom = true;
+
         EnemiesRemaining = -1; // Stop the code firing when it = 0
         WaveResting = false;
         WaveStarted = true;

@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &647458259980333248
 Transform:
   m_ObjectHideFlags: 0
@@ -275,4 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1284018b84b786d408f612f29d5ecb2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageMin: 0
+  DamageMax: 0
   ProjectileDirection: {x: 0, y: 0}
+  type: 0

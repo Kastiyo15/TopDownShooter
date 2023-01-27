@@ -47,12 +47,9 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     // Prefix L_  May add system where enemies are given a level and their base stats are randomly assigned
     #region PLAYER LEVEL STATS
     [Header("Level Stats")]
-    public int L_Level; // player level
-    public float L_CurrentXp; // player current xp
-    public float L_RequiredXp; // player required xp to level up
-    public int L_TalentPoints; // how many total talent points player has
-    public int L_TalentPointsSpent; // total talent points spent
-    public int L_TalentPointsAvailable; // total remaining talent points
+    public LevelManager.LevelData L_PlayerLevelData = new LevelManager.LevelData();
+    public LevelManager.LevelData L_RifleLevelData = new LevelManager.LevelData();
+    public LevelManager.LevelData L_ShotgunLevelData = new LevelManager.LevelData();
     #endregion
 
     // Prefix S_
@@ -78,6 +75,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     public int C_TotalBulletsFired;
     public int C_TotalBulletsHit;
     public float C_TotalAccuracy; // bullets hit / fired / 100
+    public int C_TotalDamage;
     #endregion
 
     #region PLAYER TALENT POINTS LISTS
@@ -134,12 +132,9 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         a_SaveData.Z_PlayerDashTimer = A_PlayerDashTimer;
 
         // Level
-        a_SaveData.Z_Level = L_Level;
-        a_SaveData.Z_CurrentXp = L_CurrentXp;
-        a_SaveData.Z_RequiredXp = L_RequiredXp;
-        a_SaveData.Z_TalentPoints = L_TalentPoints;
-        a_SaveData.Z_TalentPointsSpent = L_TalentPointsSpent;
-        a_SaveData.Z_TalentPointsAvailable = L_TalentPointsAvailable;
+        a_SaveData.Z_PlayerLevelData = L_PlayerLevelData;
+        a_SaveData.Z_RifleLevelData = L_RifleLevelData;
+        a_SaveData.Z_ShotgunLevelData = L_ShotgunLevelData;
 
         // Score
         a_SaveData.Z_TotalScore = S_TotalScore;
@@ -157,6 +152,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         a_SaveData.Z_TotalBulletsFired = C_TotalBulletsFired;
         a_SaveData.Z_TotalBulletsHit = C_TotalBulletsHit;
         a_SaveData.Z_TotalAccuracy = C_TotalAccuracy;
+        a_SaveData.Z_TotalDamage = C_TotalDamage;
 
         // Player Lists
         a_SaveData.Z_TalentPointsSpentGeneral = L_TalentPointsSpentGeneral;
@@ -193,12 +189,9 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         A_PlayerDashTimer = a_SaveData.Z_PlayerDashTimer;
 
         // Level
-        L_Level = a_SaveData.Z_Level;
-        L_CurrentXp = a_SaveData.Z_CurrentXp;
-        L_RequiredXp = a_SaveData.Z_RequiredXp;
-        L_TalentPoints = a_SaveData.Z_TalentPoints;
-        L_TalentPointsSpent = a_SaveData.Z_TalentPointsSpent;
-        L_TalentPointsAvailable = a_SaveData.Z_TalentPointsAvailable;
+        L_PlayerLevelData = a_SaveData.Z_PlayerLevelData;
+        L_RifleLevelData = a_SaveData.Z_RifleLevelData;
+        L_ShotgunLevelData = a_SaveData.Z_ShotgunLevelData;
 
         // Score
         S_TotalScore = a_SaveData.Z_TotalScore;
@@ -216,6 +209,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         C_TotalBulletsFired = a_SaveData.Z_TotalBulletsFired;
         C_TotalBulletsHit = a_SaveData.Z_TotalBulletsHit;
         C_TotalAccuracy = a_SaveData.Z_TotalAccuracy;
+        C_TotalDamage = a_SaveData.Z_TotalDamage;
 
         // Player Lists
         L_TalentPointsSpentGeneral = a_SaveData.Z_TalentPointsSpentGeneral;

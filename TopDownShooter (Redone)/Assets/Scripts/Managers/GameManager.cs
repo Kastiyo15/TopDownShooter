@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [Header("Static Bools")]
     public static bool GameIsPaused = false;
     public static bool IsDead = false;
+    public static bool EnteredFirstRoom = false; // Set this to true when player wnters first
+
 
     [Header("Menu Panels")]
     [SerializeField] private GameObject _panelMaster;
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
     [Header("Scene Strings")]
     [SerializeField] private string _stringMainMenu;
     [SerializeField] private string _stringGameScene;
+
+    public bool TimerActive = false;
 
 
     private void Awake()
@@ -37,11 +41,18 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         IsDead = false;
+        EnteredFirstRoom = false;
 
+        // Load all saved data into the SaveData variables
         LoadJsonData(this);
 
         // Make Pause menu panels invisible
         Resume();
+
+        // Add to runs counter
+        CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.Runs);
+        // Update the Level data classes and the XP bars
+        LevelManager.Instance.StartLevelManager();
     }
 
 
@@ -62,7 +73,15 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SaveJsonData(this);
+            PlayerIsDead();
+        }
+
+
+        // When timer active, add to the time value
+        if (TimerActive && EnteredFirstRoom)
+        {
+            CareerStatsManager.Instance.UpdateStopWatch();
+            ScoreStatsManager.Instance.AddTimerscore();
         }
     }
 
@@ -70,7 +89,25 @@ public class GameManager : MonoBehaviour
     // Set IsDead true when player dies (called in the player Died Event)
     public void PlayerIsDead()
     {
+        Time.timeScale = 0f;
         IsDead = true;
+
+        TimerActive = false;
+
+        // Update Career Stats
+        CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.PlayerDeaths);
+
+        // Update the PlayerStatsManager Level data with current Level data
+        LevelManager.Instance.UpdateSavedLevelData();
+
+        // Update the run score with timer score
+        ScoreStatsManager.Instance.t_runScore += ScoreStatsManager.Instance.t_timerScore;
+
+        // Cursor Properties
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SaveJsonData(this);
     }
 
 
@@ -85,6 +122,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         IsDead = false;
+
+        TimerActive = true;
 
         // Cursor Properties
         Cursor.lockState = CursorLockMode.Confined;
@@ -101,6 +140,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0f;
         GameIsPaused = true;
+
+        TimerActive = false;
 
         // Cursor Properties
         Cursor.lockState = CursorLockMode.None;
@@ -138,11 +179,10 @@ public class GameManager : MonoBehaviour
 
 
 
-
-
     //////////////////////////////////////////////////////////////////
     // SAVING AND LOADING //
     //////////////////////////////////////////////////////////////////
+
     public static void SaveJsonData(GameManager a_GameManager)
     {
         SaveData sd = new SaveData();
@@ -181,6 +221,7 @@ public class GameManager : MonoBehaviour
         // Load Player Stats
         PlayerStatsManager.Instance.LoadFromSaveData(a_SaveData);
     }
+
     //////////////////////////////////////////////////////////////////
     // SAVING AND LOADING //
     //////////////////////////////////////////////////////////////////

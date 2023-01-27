@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour, IKnockable, IHittable
         if (_scriptEnemyWaveSpawner.WaveStarted)
         {
             // Add to killed counter
-            CareerStatsManager.Instance.UpdateEnemiesKilled();
+            CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.EnemiesKilled);
 
             // Add to score
             ScoreStatsManager.Instance.AddScorePerKill(_scoreValue);

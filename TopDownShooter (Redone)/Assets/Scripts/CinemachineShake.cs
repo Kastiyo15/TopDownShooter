@@ -8,6 +8,8 @@ public class CinemachineShake : MonoBehaviour
     public static CinemachineShake Instance { get; private set; }
 
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
+    private CinemachineBasicMultiChannelPerlin _cinemachineBasicMultiChannelPerlin;
+
     private float _shakeTimer;
 
     private void Awake()
@@ -16,15 +18,24 @@ public class CinemachineShake : MonoBehaviour
         {
             Instance = this;
         }
-        _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
+
+
+    private void Start()
+    {
+        _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+        _cinemachineBasicMultiChannelPerlin = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
+    }
+
 
     public void ShakeCamera(float intensity, float time)
     {
-        CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
         _shakeTimer = time;
     }
+
 
     private void Update()
     {

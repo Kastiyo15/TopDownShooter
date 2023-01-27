@@ -16,6 +16,8 @@ public class LevelManager : MonoBehaviour
         public float CurrentXp;
         public float RequiredXp;
         public int TalentPoints;
+        public int TalentPointsSpent;
+        public int TalentPointsAvailable;
         [Range(1000f, 10000f)] public float AdditionMult;
         [Range(2f, 16f)] public float PowerMult;
         [Range(7f, 28f)] public float DivisionMult;
@@ -48,17 +50,27 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
-    private void Start()
+    public void StartLevelManager()
     {
-        m_Player.RequiredXp = CalculateRequiredXp(m_Player);
+        // Set the data sets to the saved data sets
+        m_Player = PlayerStatsManager.Instance.L_PlayerLevelData;
+        m_Rifle = PlayerStatsManager.Instance.L_RifleLevelData;
+        m_Shotgun = PlayerStatsManager.Instance.L_ShotgunLevelData;
+
+        // check if this is a new player
+        if (m_Player.RequiredXp == 0)
+        {
+            m_Player.RequiredXp = CalculateRequiredXp(m_Player);
+            StartCoroutine(UpdateXPBar(m_Player));
+
+            m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
+            m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
+        }
+
         StartCoroutine(UpdateXPBar(m_Player));
 
-        m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
-        StartCoroutine(UpdateXPBar(m_Rifle));
-
-        m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
-        StartCoroutine(UpdateXPBar(m_Shotgun));
+        // Update the ui bars and text
+        HideWeaponBars(0);
     }
 
 
@@ -87,7 +99,6 @@ public class LevelManager : MonoBehaviour
             LevelUp(data);
         }
 
-        StopCoroutine(UpdateXPBar(data));
         StartCoroutine(UpdateXPBar(data));
     }
 
@@ -106,7 +117,6 @@ public class LevelManager : MonoBehaviour
     public IEnumerator UpdateXPBar(LevelData data)
     {
         data.BarXP.LevelText.SetText($"{data.Level}");
-
         data.BarXP.Foreground.fillAmount = data.CurrentXp / data.RequiredXp;
         data.BarXP.XPText.SetText($"XP: {data.CurrentXp} / {data.RequiredXp}");
 
@@ -128,19 +138,38 @@ public class LevelManager : MonoBehaviour
         switch (id)
         {
             case (0):
+                StopCoroutine(UpdateXPBar(m_Shotgun));
+                StartCoroutine(UpdateXPBar(m_Rifle));
+
                 m_Shotgun.BarXP.SlowBar.gameObject.SetActive(false);
                 m_Shotgun.BarXP.Foreground.gameObject.SetActive(false);
+                m_Shotgun.BarXP.LevelText.gameObject.SetActive(false);
+
                 m_Rifle.BarXP.SlowBar.gameObject.SetActive(true);
                 m_Rifle.BarXP.Foreground.gameObject.SetActive(true);
-                StartCoroutine(UpdateXPBar(m_Rifle));
+                m_Rifle.BarXP.LevelText.gameObject.SetActive(true);
                 break;
             case (1):
+                StopCoroutine(UpdateXPBar(m_Rifle));
+                StartCoroutine(UpdateXPBar(m_Shotgun));
+
                 m_Rifle.BarXP.SlowBar.gameObject.SetActive(false);
                 m_Rifle.BarXP.Foreground.gameObject.SetActive(false);
+                m_Rifle.BarXP.LevelText.gameObject.SetActive(false);
+
                 m_Shotgun.BarXP.SlowBar.gameObject.SetActive(true);
                 m_Shotgun.BarXP.Foreground.gameObject.SetActive(true);
-                StartCoroutine(UpdateXPBar(m_Shotgun));
+                m_Shotgun.BarXP.LevelText.gameObject.SetActive(true);
                 break;
         }
+    }
+
+
+    // Called in the gameManager, when player dies
+    public void UpdateSavedLevelData()
+    {
+        PlayerStatsManager.Instance.L_PlayerLevelData = m_Player;
+        PlayerStatsManager.Instance.L_RifleLevelData = m_Rifle;
+        PlayerStatsManager.Instance.L_ShotgunLevelData = m_Shotgun;
     }
 }

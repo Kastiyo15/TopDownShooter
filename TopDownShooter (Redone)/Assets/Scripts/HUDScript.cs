@@ -9,9 +9,9 @@ using DamageNumbersPro;
 public class HUDScript : MonoBehaviour
 {
     [Header("Weapon Select HUD")]
-    [SerializeField] private List<Sprite> _buttonSprites = new List<Sprite>();
     [SerializeField] private TMP_Text _txtWeaponName;
     [SerializeField] private TMP_Text _txtWeaponDamage;
+    [SerializeField] private TMP_Text _txtSwitchButton;
 
     [Header("Ammo Counter HUD")]
     [SerializeField] private Image _barAmmoBackground;
@@ -23,6 +23,9 @@ public class HUDScript : MonoBehaviour
     [Header("Score Counter HUD")]
     [SerializeField] private TMP_Text _txtScoreCounter;
     [SerializeField] private DamageNumber _txtScorePopup;
+    [SerializeField] private float _displayScore;
+    [SerializeField] private float _roundedScore;
+    [SerializeField] private float _transitionSpeed = 100f;
 
     [Header("Wave Counter HUD")]
     [SerializeField] private GameObject _panelWaveCounterHUD;
@@ -46,9 +49,9 @@ public class HUDScript : MonoBehaviour
     {
         DisplayAmmoBars(WeaponStatsManager.Instance.W_WeaponID);
 
-        StartCoroutine(UpdateScoreHUD(0));
-
         UpdatePlayerHealthHUD();
+
+        StartCoroutine("UpdateScoreHUD");
 
         HideHUD();
     }
@@ -80,6 +83,16 @@ public class HUDScript : MonoBehaviour
         int damageMax = damageValue + (Mathf.FloorToInt(damageValue / 10));
 
         _txtWeaponDamage.SetText($" {damageMin} - {damageMax}");
+
+        switch (i)
+        {
+            case (0):
+                _txtSwitchButton.SetText($"E");
+                break;
+            case (1):
+                _txtSwitchButton.SetText($"Q");
+                break;
+        }
     }
     #endregion
 
@@ -175,18 +188,16 @@ public class HUDScript : MonoBehaviour
 
 
     #region SCORE COUNTER HUD
-    public IEnumerator UpdateScoreHUD(int score)
+    public IEnumerator UpdateScoreHUD()
     {
-        var duration = 0.25f;
-        //_txtScoreCounter.SetText($"SCORE: {ScoreStatsManager.Instance.t_runScore}");   
-        for (float t = 0.0f; t < duration; t += Time.deltaTime)
+        while (true)
         {
-            var currentScore = Mathf.RoundToInt(Mathf.Lerp(score, ScoreStatsManager.Instance.t_runScore, t / duration));
-            currentScore = Mathf.RoundToInt(currentScore);
-            _txtScoreCounter.SetText($"{currentScore}");
+            _transitionSpeed = ScoreStatsManager.Instance.t_runScore - _displayScore;
+            _displayScore = Mathf.MoveTowards(_displayScore, ScoreStatsManager.Instance.t_runScore, _transitionSpeed * Time.deltaTime);
+            _roundedScore = Mathf.RoundToInt(_displayScore);
+            _txtScoreCounter.SetText($"{_roundedScore}");
             yield return null;
         }
-        _txtScoreCounter.SetText($"{ScoreStatsManager.Instance.t_runScore}");
     }
     #endregion
 

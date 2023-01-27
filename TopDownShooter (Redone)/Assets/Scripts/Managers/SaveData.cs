@@ -38,12 +38,9 @@ public class SaveData
     // Prefix L_  May add system where enemies are given a level and their base stats are randomly assigned
     #region PLAYER LEVEL STATS
     [Header("Level Stats")]
-    public int Z_Level; // player level
-    public float Z_CurrentXp; // player current xp
-    public float Z_RequiredXp; // player required xp to level up
-    public int Z_TalentPoints; // how many total talent points player has
-    public int Z_TalentPointsSpent; // total talent points spent
-    public int Z_TalentPointsAvailable; // total remaining talent points
+    public LevelManager.LevelData Z_PlayerLevelData = new LevelManager.LevelData();
+    public LevelManager.LevelData Z_RifleLevelData = new LevelManager.LevelData();
+    public LevelManager.LevelData Z_ShotgunLevelData = new LevelManager.LevelData();
     #endregion
 
     // Prefix S_
@@ -69,6 +66,7 @@ public class SaveData
     public int Z_TotalBulletsFired;
     public int Z_TotalBulletsHit;
     public float Z_TotalAccuracy; // bullets hit / fired / 100
+    public int Z_TotalDamage;
     #endregion
 
     // Prefix W_
