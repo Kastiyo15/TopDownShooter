@@ -39,8 +39,6 @@ public class SaveData
     #region PLAYER LEVEL STATS
     [Header("Level Stats")]
     public LevelManager.LevelData Z_PlayerLevelData = new LevelManager.LevelData();
-    public LevelManager.LevelData Z_RifleLevelData = new LevelManager.LevelData();
-    public LevelManager.LevelData Z_ShotgunLevelData = new LevelManager.LevelData();
     #endregion
 
     // Prefix S_

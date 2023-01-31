@@ -18,8 +18,8 @@ MonoBehaviour:
   BulletDamage: 45
   BulletVelocity: 14
   BulletAmount: 10
-  BulletKnockbackForce: 500
+  BulletKnockbackForce: 150
   BulletDamageMult: 14
   BulletVelocityMult: 1.5
   BulletAmountMult: 2
-  BulletKnockbackForceMult: 7.5
+  BulletKnockbackForceMult: 15

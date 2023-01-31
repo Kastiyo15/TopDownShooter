@@ -27,10 +27,6 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private float _roundedScore;
     [SerializeField] private float _transitionSpeed = 100f;
 
-    [Header("Wave Counter HUD")]
-    [SerializeField] private GameObject _panelWaveCounterHUD;
-    [SerializeField] private TMP_Text _txtWaveCounter;
-
     [Header("Enemy Counter HUD")]
     [SerializeField] private TMP_Text _txtEnemyCounter;
     [SerializeField] private TMP_Text _txtEnemyKillsCounter;
@@ -41,7 +37,6 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private TMP_Text _txtPlayerHealth;
 
     [Header("HUD Groups")]
-    [SerializeField] private GameObject _topHUD;
     [SerializeField] private GameObject _centralHUD;
 
 
@@ -59,14 +54,12 @@ public class HUDScript : MonoBehaviour
 
     private void HideHUD()
     {
-        _topHUD.SetActive(false);
         _centralHUD.SetActive(false);
     }
 
 
-    private void ShowHUD()
+    public void ShowHUD()
     {
-        _topHUD.SetActive(true);
         _centralHUD.SetActive(true);
     }
 
@@ -192,25 +185,25 @@ public class HUDScript : MonoBehaviour
     {
         while (true)
         {
-            _transitionSpeed = ScoreStatsManager.Instance.t_runScore - _displayScore;
-            _displayScore = Mathf.MoveTowards(_displayScore, ScoreStatsManager.Instance.t_runScore, _transitionSpeed * Time.deltaTime);
+            _transitionSpeed = (ScoreStatsManager.Instance.t_runScore - _displayScore) * 5f;
+            _displayScore = Mathf.MoveTowards(_displayScore, ScoreStatsManager.Instance.t_runScore, (2 * _transitionSpeed) * Time.deltaTime);
             _roundedScore = Mathf.RoundToInt(_displayScore);
             _txtScoreCounter.SetText($"{_roundedScore}");
+            //_txtScoreCounter.text = string.Format("{0:000000000000}", _roundedScore);
             yield return null;
         }
     }
-    #endregion
 
-
-    #region WAVE COUNTER HUD
-    public void UpdateWaveHUD(int wave)
+    // Set the fill amount to current xp value
+    public void UpdateScoreBar(ScoreStatsManager.ScoreBar data, float duration)
     {
-        if (!_topHUD.activeInHierarchy)
+        data.MultiplierText.SetText($"x{ScoreStatsManager.Instance._currentMultiplier}");
+        data.Foreground.fillAmount = (float)ScoreStatsManager.Instance._currentScore / (float)ScoreStatsManager.Instance._requiredScore;
+
+        if (data.SlowBar.fillAmount != data.Foreground.fillAmount)
         {
-            ShowHUD();
+            data.SlowBar.fillAmount = Mathf.Lerp(data.SlowBar.fillAmount, data.Foreground.fillAmount, Mathf.Pow(duration, 2f));
         }
-        //_txtWaveCounter.gameObject.SetActive(true);
-        _txtWaveCounter.SetText($"{wave}");
     }
     #endregion
 

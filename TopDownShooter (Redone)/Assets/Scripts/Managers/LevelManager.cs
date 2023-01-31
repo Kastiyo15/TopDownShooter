@@ -18,9 +18,9 @@ public class LevelManager : MonoBehaviour
         public int TalentPoints;
         public int TalentPointsSpent;
         public int TalentPointsAvailable;
-        [Range(1000f, 10000f)] public float AdditionMult;
-        [Range(2f, 16f)] public float PowerMult;
-        [Range(7f, 28f)] public float DivisionMult;
+        [Range(100f, 2000f)] public int AdditionMult;
+        [Range(2f, 16f)] public int PowerMult;
+        [Range(7f, 28f)] public int DivisionMult;
         public XPBar BarXP;
     }
 
@@ -54,18 +54,17 @@ public class LevelManager : MonoBehaviour
     {
         // Set the data sets to the saved data sets
         m_Player = PlayerStatsManager.Instance.L_PlayerLevelData;
-        m_Rifle = PlayerStatsManager.Instance.L_RifleLevelData;
-        m_Shotgun = PlayerStatsManager.Instance.L_ShotgunLevelData;
 
         // check if this is a new player
         if (m_Player.RequiredXp == 0)
         {
             m_Player.RequiredXp = CalculateRequiredXp(m_Player);
             StartCoroutine(UpdateXPBar(m_Player));
-
-            m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
-            m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
         }
+
+        // Run this everytime we start a run
+        m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
+        m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
 
         StartCoroutine(UpdateXPBar(m_Player));
 
@@ -118,7 +117,7 @@ public class LevelManager : MonoBehaviour
     {
         data.BarXP.LevelText.SetText($"{data.Level}");
         data.BarXP.Foreground.fillAmount = data.CurrentXp / data.RequiredXp;
-        data.BarXP.XPText.SetText($"XP: {data.CurrentXp} / {data.RequiredXp}");
+        //data.BarXP.XPText.SetText($"XP: {data.CurrentXp} / {data.RequiredXp}");
 
         float duration = 0.25f;
         if (data.BarXP.SlowBar.fillAmount != data.BarXP.Foreground.fillAmount)
@@ -169,7 +168,5 @@ public class LevelManager : MonoBehaviour
     public void UpdateSavedLevelData()
     {
         PlayerStatsManager.Instance.L_PlayerLevelData = m_Player;
-        PlayerStatsManager.Instance.L_RifleLevelData = m_Rifle;
-        PlayerStatsManager.Instance.L_ShotgunLevelData = m_Shotgun;
     }
 }

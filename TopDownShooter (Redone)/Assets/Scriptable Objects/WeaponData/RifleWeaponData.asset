@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponID: 0
   WeaponName: Rifle
-  WeaponClipSize: 20
+  WeaponClipSize: 200
   WeaponFireRate: 0.1
-  WeaponSpread: 5
+  WeaponSpread: 9
   WeaponOverheatCooldown: 3
   WeaponClipSizeMult: 5
   WeaponFireRateMult: 0.8

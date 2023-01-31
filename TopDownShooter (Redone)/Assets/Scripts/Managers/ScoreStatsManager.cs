@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 
 // Run at the start of each run until the end
@@ -25,14 +27,30 @@ public class ScoreStatsManager : MonoBehaviour
 
     [Header("ScoreBar Variables")]
     [SerializeField] private int _maximumMultiplier;
-    [SerializeField] private int _currentMultiplier;
-    [SerializeField] private int _currentScore;
-    [SerializeField] private int _requiredScore;
+    [SerializeField] public int _currentMultiplier;
+    [SerializeField] public int _currentScore;
+    [SerializeField] public int _requiredScore;
 
     [Header("ScoreBar Multipliers")]
     [SerializeField][Range(0f, 1000f)] private float AdditionMult;
     [SerializeField][Range(2f, 16f)] private float PowerMult;
     [SerializeField][Range(7f, 28f)] private float DivisionMult;
+
+
+    [System.Serializable]
+    public class ScoreBar
+    {
+        public Image Background, SlowBar, Foreground;
+        public TMP_Text MultiplierText;
+    }
+
+
+    public ScoreBar m_ScoreBar = new ScoreBar();
+
+
+    [Header("References")]
+    [SerializeField] private HUDScript _scriptHUD;
+    [SerializeField] private float _duration; // the timer for the score bar lerp
 
 
     private void Awake()
@@ -50,6 +68,9 @@ public class ScoreStatsManager : MonoBehaviour
 
         _currentMultiplier = 1;
         _requiredScore = CalculateRequiredScore();
+
+        // Update the score bar using the hudscript
+        _scriptHUD.UpdateScoreBar(m_ScoreBar, _duration);
     }
 
 
@@ -137,5 +158,8 @@ public class ScoreStatsManager : MonoBehaviour
         {
             IncreaseMultiplier();
         }
+
+        // Update the score bar using the hudscript
+        _scriptHUD.UpdateScoreBar(m_ScoreBar, _duration);
     }
 }

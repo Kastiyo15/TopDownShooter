@@ -74,6 +74,9 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveComplete = false;
 
         StartCoroutine(WaveSpawning());
+
+
+        _scriptHUD.ShowHUD();
     }
 
 
@@ -101,7 +104,6 @@ public class EnemyWaveSpawner : MonoBehaviour
         {
             spawnDelay = GetSpawnDelay();
             waveSpawnCount = GetSpawnCount();
-            _scriptHUD.UpdateWaveHUD(WaveNumber);
 
             yield return new WaitForSeconds(spawnDelay);
 

@@ -123,7 +123,7 @@ public class PlayerShoot : MonoBehaviour
         if (!_weaponController[id].WeaponData.WeaponIsOverheating)
         {
             // Shake the camera when shooting
-            CinemachineShake.Instance.ShakeCamera((Mathf.Clamp(BulletStatsManager.Instance.B_BulletKnockbackForce / 5f, 0f, 10f)), 0.2f);
+            CinemachineShake.Instance.ShakeCamera((Mathf.Clamp(BulletStatsManager.Instance.B_BulletKnockbackForce / 15f, 0f, 10f)), 0.25f);
 
             IsShootable = false;
             //Debug.Log("Shooting");
@@ -133,22 +133,45 @@ public class PlayerShoot : MonoBehaviour
             // if Rifle, then give messy spray when changing weapon spread
             if (id == 0)
             {
-                // If you have 1 bullet and no weapon spread, fire accurate
-                if (BulletStatsManager.Instance.B_BulletAmount == 1 && WeaponStatsManager.Instance.W_WeaponSpread == 0)
+                // If you have 1 bullet 
+                if (BulletStatsManager.Instance.B_BulletAmount == 1)
                 {
-                    _startAngle = -(_firePoint.eulerAngles.z) + WeaponStatsManager.Instance.W_WeaponSpread;
-                    _endAngle = -(_firePoint.eulerAngles.z) - WeaponStatsManager.Instance.W_WeaponSpread;
-                }
-                // If you have 1 or more and bullet spread is not equal to 0, fire randomly
-                else if (BulletStatsManager.Instance.B_BulletAmount >= 1 && WeaponStatsManager.Instance.W_WeaponSpread != 0)
-                {
-                    _startAngle = -(_firePoint.eulerAngles.z) + Random.Range(-WeaponStatsManager.Instance.W_WeaponSpread, WeaponStatsManager.Instance.W_WeaponSpread);
-                    _endAngle = -(_firePoint.eulerAngles.z) - Random.Range(-WeaponStatsManager.Instance.W_WeaponSpread, WeaponStatsManager.Instance.W_WeaponSpread);
-                }
+                    // fire accurate
+                    if (WeaponStatsManager.Instance.W_WeaponSpread == 0)
+                    {
+                        _startAngle = (_firePoint.eulerAngles.z);
+                        _endAngle = (_firePoint.eulerAngles.z);
+                        _angleStep = 0f;
+                        _angle = -_startAngle;
+                    }
+                    // Fire randomly within range of spread
+                    else if (WeaponStatsManager.Instance.W_WeaponSpread != 0)
+                    {
+                        // divide by 2 to get the range equal to the weapon spread value, otherwise the range is double the spread value
+                        _startAngle = _firePoint.eulerAngles.z - (WeaponStatsManager.Instance.W_WeaponSpread * 0.5f);
+                        _endAngle = _firePoint.eulerAngles.z + (WeaponStatsManager.Instance.W_WeaponSpread * 0.5f);
+                        _angleStep = 0f;
 
-                // _angleStep = (_endAngle - _startAngle) / _bulletController[id].BulletData.BulletAmount;
-                _angleStep = ((2 * WeaponStatsManager.Instance.W_WeaponSpread) / (BulletStatsManager.Instance.B_BulletAmount));
-                _angle = _startAngle;
+                        var spread = Random.Range(_startAngle, _endAngle);
+                        _angle = -spread;
+                    }
+                }
+                // MAKE SURE TO LOCK BULLET AMOUNT WHILST WEAPON SPREAD IS 0 (have to increase weapon spread before unlocking new bullet)
+                // If you have more than 1 bullet
+                else if (BulletStatsManager.Instance.B_BulletAmount > 1)
+                {
+                    // Fire in range / bullet amount (accurate)
+                    if (WeaponStatsManager.Instance.W_WeaponSpread != 0)
+                    {
+                        var spread = Random.Range(0f, WeaponStatsManager.Instance.W_WeaponSpread);
+
+                        _startAngle = _firePoint.eulerAngles.z - (spread * 0.5f);
+                        _endAngle = _firePoint.eulerAngles.z + (spread * 0.5f);
+
+                        _angleStep = -WeaponStatsManager.Instance.W_WeaponSpread / BulletStatsManager.Instance.B_BulletAmount;
+                        _angle = -_startAngle;
+                    }
+                }
             }
 
             // If shotgun, then give accurate spray, no randomness

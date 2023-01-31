@@ -99,61 +99,61 @@ public class Player : MonoBehaviour, IKnockable
                 float angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg - 90f;
                 Rb.rotation = angle; */
 
-        if (!IsKnocked)
+
+        //Rb.MovePosition(Rb.position + MoveVelocity * MovementSpeed * Time.fixedDeltaTime);
+        Rb.velocity += (MoveVelocity * MovementSpeed * Time.fixedDeltaTime);
+
+        #region NEW CHARACTER MOVEMENT
+        /* if (IsFacingNorth)  // looking upwards
         {
-            //Rb.MovePosition(Rb.position + MoveVelocity * MovementSpeed * Time.fixedDeltaTime);
-            Rb.velocity += (MoveVelocity * MovementSpeed * Time.fixedDeltaTime);
-            #region NEW CHARACTER MOVEMENT
-            /* if (IsFacingNorth)  // looking upwards
+            if (MoveVelocity.x != 0)
             {
-                if (MoveVelocity.x != 0)
-                {
-                    moveInlineWithMouse = MoveVelocity;
-                }
-                else
-                {
-                    moveInlineWithMouse = (Vector2)transform.up * MoveVelocity.y;
-                }
+                moveInlineWithMouse = MoveVelocity;
             }
-            else if (IsFacingSouth) // looking downwards
+            else
             {
-                if (MoveVelocity.x != 0)
-                {
-                    moveInlineWithMouse = MoveVelocity;
-                }
-                else
-                {
-                    moveInlineWithMouse = (Vector2)transform.up * -MoveVelocity.y;
-                }
+                moveInlineWithMouse = (Vector2)transform.up * MoveVelocity.y;
             }
-            else if (IsFacingEast)   // looking Right
-            {
-                if (MoveVelocity.y != 0)
-                {
-                    moveInlineWithMouse = MoveVelocity;
-                }
-                else
-                {
-                    moveInlineWithMouse = (Vector2)transform.up * MoveVelocity.x;
-                }
-            }
-            else if (IsFacingWest)  // looking Left
-            {
-                if (MoveVelocity.y != 0)
-                {
-                    moveInlineWithMouse = MoveVelocity;
-                }
-                else
-                {
-                    moveInlineWithMouse = (Vector2)transform.up * -MoveVelocity.x;
-                }
-            }
-            //var currentVelocity = Rb.velocity;
-            Rb.velocity += (moveInlineWithMouse).normalized * MovementSpeed * Time.fixedDeltaTime;
-            //Rb.velocity = Vector2.Lerp(currentVelocity, (moveInlineWithMouse).normalized * MovementSpeed, Time.fixedDeltaTime); */
-            #endregion
         }
-        else if (IsKnocked)
+        else if (IsFacingSouth) // looking downwards
+        {
+            if (MoveVelocity.x != 0)
+            {
+                moveInlineWithMouse = MoveVelocity;
+            }
+            else
+            {
+                moveInlineWithMouse = (Vector2)transform.up * -MoveVelocity.y;
+            }
+        }
+        else if (IsFacingEast)   // looking Right
+        {
+            if (MoveVelocity.y != 0)
+            {
+                moveInlineWithMouse = MoveVelocity;
+            }
+            else
+            {
+                moveInlineWithMouse = (Vector2)transform.up * MoveVelocity.x;
+            }
+        }
+        else if (IsFacingWest)  // looking Left
+        {
+            if (MoveVelocity.y != 0)
+            {
+                moveInlineWithMouse = MoveVelocity;
+            }
+            else
+            {
+                moveInlineWithMouse = (Vector2)transform.up * -MoveVelocity.x;
+            }
+        }
+        //var currentVelocity = Rb.velocity;
+        Rb.velocity += (moveInlineWithMouse).normalized * MovementSpeed * Time.fixedDeltaTime;
+        //Rb.velocity = Vector2.Lerp(currentVelocity, (moveInlineWithMouse).normalized * MovementSpeed, Time.fixedDeltaTime); */
+        #endregion
+        
+        if (IsKnocked)
         {
             //Rb.MovePosition(Rb.position - _knockDirection * _knockForce * Time.fixedDeltaTime);
             Rb.velocity -= _knockDirection * _knockForce * Time.fixedDeltaTime;
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour, IKnockable
     public void KnockedBack(Vector2 direction, float knockForce)
     {
         IsKnocked = true;
-        _knockForce = knockForce;
+        _knockForce = knockForce * 0.5f;
         _knockDirection = direction;
     }
 

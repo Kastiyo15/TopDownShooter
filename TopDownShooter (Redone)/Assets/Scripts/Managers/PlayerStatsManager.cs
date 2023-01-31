@@ -48,8 +48,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     #region PLAYER LEVEL STATS
     [Header("Level Stats")]
     public LevelManager.LevelData L_PlayerLevelData = new LevelManager.LevelData();
-    public LevelManager.LevelData L_RifleLevelData = new LevelManager.LevelData();
-    public LevelManager.LevelData L_ShotgunLevelData = new LevelManager.LevelData();
     #endregion
 
     // Prefix S_
@@ -133,8 +131,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
 
         // Level
         a_SaveData.Z_PlayerLevelData = L_PlayerLevelData;
-        a_SaveData.Z_RifleLevelData = L_RifleLevelData;
-        a_SaveData.Z_ShotgunLevelData = L_ShotgunLevelData;
 
         // Score
         a_SaveData.Z_TotalScore = S_TotalScore;
@@ -190,8 +186,6 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
 
         // Level
         L_PlayerLevelData = a_SaveData.Z_PlayerLevelData;
-        L_RifleLevelData = a_SaveData.Z_RifleLevelData;
-        L_ShotgunLevelData = a_SaveData.Z_ShotgunLevelData;
 
         // Score
         S_TotalScore = a_SaveData.Z_TotalScore;

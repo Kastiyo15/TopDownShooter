@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using TMPro;
 
 
 public class RoomTrigger : MonoBehaviour
@@ -21,7 +22,6 @@ public class RoomTrigger : MonoBehaviour
     [SerializeField] private float _rangeY;
 
     [Header("References")]
-    [SerializeField] private float _destroyTime;
     [SerializeField] private Transform _roomCentre;
     private Vector2 _roomCentrePosition;
     private RoomTemplates _roomLists;
@@ -114,7 +114,7 @@ public class RoomTrigger : MonoBehaviour
         SetCameraConfineZone(currentRoom);
 
         var once = true;
-        var newRoomWallsPrefab = currentRoom.transform.GetChild(0).gameObject;
+        var newRoomWallsPrefab = currentRoom.transform.GetChild(1).gameObject;
 
         // Wait until all enemies are killed before we destroy the rooms
         while (!_scriptWaveSpawner.WaveComplete)
@@ -123,14 +123,14 @@ public class RoomTrigger : MonoBehaviour
             {
                 // Inactivate the walls folder (containing all the box colliders) on the rooms we dont need them on
                 // original room
-                _prefabParent.transform.GetChild(0).gameObject.SetActive(false);
+                _prefabParent.transform.GetChild(2).gameObject.SetActive(false);
                 // new room
                 newRoomWallsPrefab.SetActive(false);
                 once = false;
             }
             yield return null;
         }
-        
+
         Destroy(closedRoom);
         Destroy(_prefabParent); // TODO: make it inactive instaed, and object pool all the rooms
 
