@@ -11,7 +11,7 @@ public class CameraTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.GameIsPaused)
+        if (!GameManager.Instance.GameIsPaused)
         {
             Vector3 mousePos = MouseUtils.GetMousePosition2d();
             Vector3 targetPos = (_player.position + mousePos) / 2f; // to find the midpoint

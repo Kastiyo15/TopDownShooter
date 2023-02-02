@@ -16,31 +16,28 @@ public class Crosshair : MonoBehaviour
         StartCoroutine("DetectEnemy");
     }
 
+
     // Update is called once per frame
     private void Update()
     {
-        if (!GameManager.GameIsPaused)
+        // Move and rotate the mouse
+        #region  MOVE AND ROTATE MOUSE
+        _mousePos = MouseUtils.GetMousePosition2d();
+
+        // Rotate the crosshair for fun
+        //_crosshairImage.transform.Rotate(Vector3.forward * 0.1f);
+
+        transform.position = _mousePos;
+        #endregion
+
+        if (DetectEnemy())
         {
-            // Move and rotate the mouse
-            #region  MOVE AND ROTATE MOUSE
-            _mousePos = MouseUtils.GetMousePosition2d();
-
-            // Rotate the crosshair for fun
-            //_crosshairImage.transform.Rotate(Vector3.forward * 0.1f);
-
-            transform.position = _mousePos;
-            #endregion
-
-            if (DetectEnemy())
-            {
-                _animator.SetTrigger("OnHover");
-            }
-            else
-            {
-                _animator.SetTrigger("Normal");
-            }
+            _animator.SetTrigger("OnHover");
         }
-        return;
+        else
+        {
+            _animator.SetTrigger("Normal");
+        }
     }
 
 
@@ -58,5 +55,21 @@ public class Crosshair : MonoBehaviour
         {
             return false;
         }
+    }
+
+
+    public void ShowCrosshair()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        gameObject.SetActive(true);
+    }
+
+
+    public void HideCrosshair()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameObject.SetActive(false);
     }
 }

@@ -52,7 +52,7 @@ public class PlayerShoot : MonoBehaviour
     private void Update()
     {
         // Shoot
-        if (Input.GetMouseButton(0) && IsShootable && !GameManager.GameIsPaused)
+        if (Input.GetMouseButton(0) && IsShootable && !GameManager.Instance.GameIsPaused)
         {
             StopCoroutine("Shoot");
             StartCoroutine("Shoot");

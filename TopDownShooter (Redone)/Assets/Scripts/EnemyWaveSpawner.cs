@@ -32,7 +32,7 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveResting = true;
         WaveStarted = false;
         WaveComplete = true;
-        
+
         RoomCentre = new Vector2(0f, 0f); // initialise this variable
         _arrayLength = _enemyScriptableObject.Length; // initialise length of array variable
     }
@@ -66,7 +66,7 @@ public class EnemyWaveSpawner : MonoBehaviour
     // Called from RoomTrigger
     public void StartWave()
     {
-        GameManager.EnteredFirstRoom = true;
+        GameManager.Instance.EnteredFirstRoom = true;
 
         EnemiesRemaining = -1; // Stop the code firing when it = 0
         WaveResting = false;
@@ -88,6 +88,15 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveComplete = true;
 
         ScoreStatsManager.Instance.AddWaveScore(WaveNumber * 10);
+
+        // Add reset point if its been 5 waves
+        if (WaveNumber % 6 == 0)
+        {
+            Debug.Log("Reset Point Gained!");
+            LevelManager.Instance.AddResetPoint(LevelManager.Instance.m_Player);
+            LevelManager.Instance.AddResetPoint(LevelManager.Instance.m_Rifle);
+            LevelManager.Instance.AddResetPoint(LevelManager.Instance.m_Shotgun);
+        }
     }
 
 
@@ -124,6 +133,7 @@ public class EnemyWaveSpawner : MonoBehaviour
 
                 newSpawn.transform.position = (RoomCentre + nextSpawnPos);
             }
+
             WaveNumber++;
         }
     }
@@ -131,17 +141,17 @@ public class EnemyWaveSpawner : MonoBehaviour
 
     private float GetSpawnDelay()
     {
-        var startingDelay = 2f;
-        var finalDelay = 0.5f;
-        var maxWave = 100;
+        var startingDelay = 1.75f;
+        var finalDelay = 0.2f;
+        var maxWave = 90;
         return (WaveNumber >= 0 && WaveNumber <= maxWave) ? (1f / (Mathf.Pow(maxWave, 2)) * (startingDelay - finalDelay) * Mathf.Pow(WaveNumber - maxWave, 2)) : finalDelay;
     }
 
 
     private int GetSpawnCount()
     {
-        var startingCount = 1;
-        var finalCount = 60;
+        var startingCount = 5;
+        var finalCount = 150;
         var maxWave = 100;
         return (WaveNumber >= 0 && WaveNumber <= maxWave) ? Mathf.RoundToInt(1f / (Mathf.Pow(maxWave, 2)) * (finalCount - startingCount) * Mathf.Pow(WaveNumber, 2)) + startingCount : finalCount;
     }

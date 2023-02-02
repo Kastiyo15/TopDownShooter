@@ -18,12 +18,11 @@ public class LevelManager : MonoBehaviour
         public int TalentPoints;
         public int TalentPointsSpent;
         public int TalentPointsAvailable;
+        public int ResetPoints;
         [Range(100f, 2000f)] public int AdditionMult;
         [Range(2f, 16f)] public int PowerMult;
         [Range(7f, 28f)] public int DivisionMult;
-        public XPBar BarXP;
     }
-
 
     [System.Serializable]
     public class XPBar
@@ -32,13 +31,17 @@ public class LevelManager : MonoBehaviour
         public TMP_Text XPText, LevelText;
     }
 
-
     [Header("Player Level Data")]
     public LevelData m_Player = new LevelData();
+    public XPBar m_PlayerBar = new XPBar();
 
     [Header("Weapon Level Data")]
     public LevelData m_Rifle = new LevelData();
+    public XPBar m_RifleBar = new XPBar();
+
     public LevelData m_Shotgun = new LevelData();
+    public XPBar m_ShotgunBar = new XPBar();
+
 
 
     private void Awake()
@@ -50,6 +53,15 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        UpdateXPBar(m_Player, m_PlayerBar);
+        UpdateXPBar(m_Rifle, m_RifleBar);
+        UpdateXPBar(m_Shotgun, m_ShotgunBar);
+    }
+
+
+
     public void StartLevelManager()
     {
         // Set the data sets to the saved data sets
@@ -59,14 +71,17 @@ public class LevelManager : MonoBehaviour
         if (m_Player.RequiredXp == 0)
         {
             m_Player.RequiredXp = CalculateRequiredXp(m_Player);
-            StartCoroutine(UpdateXPBar(m_Player));
         }
 
         // Run this everytime we start a run
         m_Rifle.RequiredXp = CalculateRequiredXp(m_Rifle);
         m_Shotgun.RequiredXp = CalculateRequiredXp(m_Shotgun);
 
-        StartCoroutine(UpdateXPBar(m_Player));
+
+        UpdateXPBar(m_Player, m_PlayerBar);
+        UpdateXPBar(m_Rifle, m_RifleBar);
+        UpdateXPBar(m_Shotgun, m_ShotgunBar);
+
 
         // Update the ui bars and text
         HideWeaponBars(0);
@@ -88,6 +103,13 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    // Add reset points every 5 levels
+    public void AddResetPoint(LevelData data)
+    {
+        data.ResetPoints++;
+    }
+
+
     // Add experience flat rate
     public void GainExperience(LevelData data, float xpGained)
     {
@@ -98,7 +120,6 @@ public class LevelManager : MonoBehaviour
             LevelUp(data);
         }
 
-        StartCoroutine(UpdateXPBar(data));
     }
 
 
@@ -113,54 +134,52 @@ public class LevelManager : MonoBehaviour
 
 
     // Set the fill amount to current xp value
-    public IEnumerator UpdateXPBar(LevelData data)
+    public void UpdateXPBar(LevelData data, XPBar barXP)
     {
-        data.BarXP.LevelText.SetText($"{data.Level}");
-        data.BarXP.Foreground.fillAmount = data.CurrentXp / data.RequiredXp;
-        //data.BarXP.XPText.SetText($"XP: {data.CurrentXp} / {data.RequiredXp}");
+        barXP.LevelText.SetText($"{data.Level}");
+        barXP.Foreground.fillAmount = data.CurrentXp / data.RequiredXp;
 
-        float duration = 0.25f;
-        if (data.BarXP.SlowBar.fillAmount != data.BarXP.Foreground.fillAmount)
+        float duration = 0.2f;
+
+        if (barXP.SlowBar.fillAmount != barXP.Foreground.fillAmount)
         {
-            for (float t = 0.0f; t < duration; t += Time.deltaTime)
-            {
-                data.BarXP.SlowBar.fillAmount = Mathf.Lerp(data.BarXP.SlowBar.fillAmount, data.BarXP.Foreground.fillAmount, t);
-                yield return null;
-            }
+            barXP.SlowBar.fillAmount = Mathf.Lerp(barXP.SlowBar.fillAmount, barXP.Foreground.fillAmount, Mathf.Pow(duration, 2f));
         }
-        yield break;
     }
-
 
     public void HideWeaponBars(int id)
     {
         switch (id)
         {
             case (0):
-                StopCoroutine(UpdateXPBar(m_Shotgun));
-                StartCoroutine(UpdateXPBar(m_Rifle));
 
-                m_Shotgun.BarXP.SlowBar.gameObject.SetActive(false);
-                m_Shotgun.BarXP.Foreground.gameObject.SetActive(false);
-                m_Shotgun.BarXP.LevelText.gameObject.SetActive(false);
+                HideXPBar(m_ShotgunBar);
+                ShowXPBar(m_RifleBar);
 
-                m_Rifle.BarXP.SlowBar.gameObject.SetActive(true);
-                m_Rifle.BarXP.Foreground.gameObject.SetActive(true);
-                m_Rifle.BarXP.LevelText.gameObject.SetActive(true);
                 break;
             case (1):
-                StopCoroutine(UpdateXPBar(m_Rifle));
-                StartCoroutine(UpdateXPBar(m_Shotgun));
 
-                m_Rifle.BarXP.SlowBar.gameObject.SetActive(false);
-                m_Rifle.BarXP.Foreground.gameObject.SetActive(false);
-                m_Rifle.BarXP.LevelText.gameObject.SetActive(false);
-
-                m_Shotgun.BarXP.SlowBar.gameObject.SetActive(true);
-                m_Shotgun.BarXP.Foreground.gameObject.SetActive(true);
-                m_Shotgun.BarXP.LevelText.gameObject.SetActive(true);
+                HideXPBar(m_RifleBar);
+                ShowXPBar(m_ShotgunBar);
+                
                 break;
         }
+    }
+
+
+    private void HideXPBar(XPBar barXP)
+    {
+        barXP.SlowBar.gameObject.SetActive(false);
+        barXP.Foreground.gameObject.SetActive(false);
+        barXP.LevelText.gameObject.SetActive(false);
+    }
+
+
+    private void ShowXPBar(XPBar barXP)
+    {
+        barXP.SlowBar.gameObject.SetActive(true);
+        barXP.Foreground.gameObject.SetActive(true);
+        barXP.LevelText.gameObject.SetActive(true);
     }
 
 

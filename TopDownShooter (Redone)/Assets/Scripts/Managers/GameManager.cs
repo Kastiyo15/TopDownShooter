@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 
 [System.Serializable]
@@ -10,9 +12,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Static Bools")]
-    public static bool GameIsPaused = false;
-    public static bool IsDead = false;
-    public static bool EnteredFirstRoom = false; // Set this to true when player wnters first
+    public bool GameIsPaused = false;
+    public bool IsDead = false;
+    public bool EnteredFirstRoom = false; // Set this to true when player wnters first
 
 
     [Header("Menu Panels")]
@@ -20,10 +22,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _panelPauseMenu;
     [SerializeField] private GameObject _panelOptionsMenu;
     [SerializeField] private GameObject _panelGameUI;
+    [SerializeField] private GameObject _panelDeathScreen;
 
     [Header("Scene Strings")]
     [SerializeField] private string _stringMainMenu;
     [SerializeField] private string _stringGameScene;
+
+    [Header("References")]
+    [SerializeField] private Crosshair _scriptCrosshair;
+    [SerializeField] private Volume _globalVolume;
+    private VolumeProfile _profile;
 
     public bool TimerActive = false;
 
@@ -34,12 +42,16 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        _profile = _globalVolume.sharedProfile;
     }
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        SwitchVignette(true);
+
         IsDead = false;
         EnteredFirstRoom = false;
 
@@ -57,7 +69,7 @@ public class GameManager : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !IsDead)
         {
@@ -89,25 +101,41 @@ public class GameManager : MonoBehaviour
     // Set IsDead true when player dies (called in the player Died Event)
     public void PlayerIsDead()
     {
-        Time.timeScale = 0f;
-        IsDead = true;
+        SwitchVignette(false);
 
+        Time.timeScale = 0f;
+        GameIsPaused = false;
+        IsDead = true;
         TimerActive = false;
 
         // Update Career Stats
         CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.PlayerDeaths);
-
         // Update the PlayerStatsManager Level data with current Level data
         LevelManager.Instance.UpdateSavedLevelData();
-
         // Update the run score with timer score
         ScoreStatsManager.Instance.t_runScore += ScoreStatsManager.Instance.t_timerScore;
 
         // Cursor Properties
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        _scriptCrosshair.HideCrosshair();
+
 
         SaveJsonData(this);
+
+
+        _panelPauseMenu.SetActive(false);
+        _panelOptionsMenu.SetActive(false);
+        _panelDeathScreen.SetActive(true);
+        _panelGameUI.SetActive(false);
+    }
+
+
+    private void SwitchVignette(bool boolean)
+    {
+        if (!_profile.TryGet<Vignette>(out var vignette))
+        {
+            vignette = _profile.Add<Vignette>(false);
+        }
+        vignette.active = boolean;
     }
 
 
@@ -117,6 +145,7 @@ public class GameManager : MonoBehaviour
         _panelMaster.SetActive(false);
         _panelPauseMenu.SetActive(false);
         _panelOptionsMenu.SetActive(false);
+        _panelDeathScreen.SetActive(false);
         _panelGameUI.SetActive(true);
 
         Time.timeScale = 1f;
@@ -126,8 +155,7 @@ public class GameManager : MonoBehaviour
         TimerActive = true;
 
         // Cursor Properties
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+        _scriptCrosshair.ShowCrosshair();
     }
 
 
@@ -144,8 +172,8 @@ public class GameManager : MonoBehaviour
         TimerActive = false;
 
         // Cursor Properties
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        _scriptCrosshair.HideCrosshair();
+
     }
 
 
