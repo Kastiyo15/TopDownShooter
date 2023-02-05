@@ -20,8 +20,15 @@ public class Enemy1 : EnemyEntity
     // Just used to get information
     private void Update()
     {
-        // Get the vector of player(target)
-        GetTargetPosition();
+        if (!GameManager.Instance.IsDead)
+        {
+            // Get the vector of player(target)
+            GetTargetPosition();
+        }
+        else
+        {
+            KillOnPlayerDeath();
+        }
     }
 
 

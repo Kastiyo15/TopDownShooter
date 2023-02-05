@@ -23,6 +23,7 @@ public class RoomTrigger : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform _roomCentre;
+    [SerializeField] private GameObject _triggerParent;
     private Vector2 _roomCentrePosition;
     private RoomTemplates _roomLists;
     private GameObject _prefabParent; // the game object parent of the room prefab (to be destroyed)
@@ -103,12 +104,13 @@ public class RoomTrigger : MonoBehaviour
         // After spawning in the right room, start this script enables enemy spawning
         _scriptWaveSpawner.StartWave();
 
-        // Spawn in a closed room, and destroy old room
+        // Spawn in a closed room
         _spawned = true;
         GameObject closedRoom = Instantiate(_roomLists.ClosedRoom, roomPosition, Quaternion.identity);
 
         // Spawn the new room below the closed room (in the hierarchy)
         GameObject currentRoom = Instantiate(newRoom, roomPosition, Quaternion.identity);
+
 
         // Set the camera confiner zone
         SetCameraConfineZone(currentRoom);
@@ -134,7 +136,17 @@ public class RoomTrigger : MonoBehaviour
         Destroy(closedRoom);
         Destroy(_prefabParent); // TODO: make it inactive instaed, and object pool all the rooms
 
+        _prefabParent.transform.GetChild(2).gameObject.SetActive(true);
         newRoomWallsPrefab.SetActive(true);
+
+        // CODE: This allows for never destroyed rooms, linking each room
+        // Although, room triggers can spawn in already spawned in rooms
+        /*         // Destroy new room trigger
+                var currentRoomTriggers = currentRoom.transform.GetChild(3).gameObject;
+                DestroyRoomEnteredTrigger(currentRoomTriggers, GetOppositeTriggerPosition(_triggerPosition));
+
+                // Destroy the trigger that we went through
+                Destroy(this.gameObject); */
     }
 
 
@@ -142,5 +154,39 @@ public class RoomTrigger : MonoBehaviour
     private void SetCameraConfineZone(GameObject currentRoom)
     {
         _cameraConfiner.m_BoundingShape2D = currentRoom.GetComponentInChildren<PolygonCollider2D>();
+    }
+
+
+    // Destroy the trigger at the door the player entered
+    private void DestroyRoomEnteredTrigger(GameObject currentRoomTriggers, TriggerPosition oppositeDirection)
+    {
+        foreach (Transform trigger in currentRoomTriggers.transform)
+        {
+            if (trigger.GetComponent<RoomTrigger>()._triggerPosition == oppositeDirection)
+            {
+                Destroy(trigger.gameObject);
+            }
+        }
+    }
+
+
+    private TriggerPosition GetOppositeTriggerPosition(TriggerPosition trigger)
+    {
+        if (trigger == TriggerPosition.East)
+        {
+            return TriggerPosition.West;
+        }
+        else if (trigger == TriggerPosition.South)
+        {
+            return TriggerPosition.North;
+        }
+        else if (trigger == TriggerPosition.West)
+        {
+            return TriggerPosition.East;
+        }
+        else
+        {
+            return TriggerPosition.South;
+        }
     }
 }

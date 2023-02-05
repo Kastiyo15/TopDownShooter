@@ -25,6 +25,7 @@ public class CareerStatsManager : MonoBehaviour
 
     public enum VariableType
     {
+        WavesCompleted,
         PlayTime,
         Runs,
         EnemiesKilled,
@@ -51,6 +52,10 @@ public class CareerStatsManager : MonoBehaviour
     {
         switch (variable)
         {
+            case (VariableType.WavesCompleted):
+                PlayerStatsManager.Instance.C_TotalWavesCompleted++;
+                break;
+
             case (VariableType.PlayTime):
                 break;
 

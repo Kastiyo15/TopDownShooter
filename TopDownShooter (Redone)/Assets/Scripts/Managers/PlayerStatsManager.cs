@@ -63,6 +63,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
     // Prefix C_
     #region PLAYER CAREER STATS
     [Header("Career Stats")]
+    public int C_TotalWavesCompleted; // How many times player has restarted
     public float C_TotalPlayTime; // H/M/S played
     public int C_TotalRuns; // How many times player has restarted
 
@@ -140,6 +141,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         a_SaveData.Z_MaximumMultiplier = S_MaximumMultiplier;
 
         // Career
+        a_SaveData.Z_TotalWavesCompleted = C_TotalWavesCompleted;
         a_SaveData.Z_TotalPlayTime = C_TotalPlayTime;
         a_SaveData.Z_TotalRuns = C_TotalRuns;
         a_SaveData.Z_TotalEnemiesKilled = C_TotalEnemiesKilled;
@@ -195,6 +197,7 @@ public class PlayerStatsManager : MonoBehaviour, ISaveable
         S_MaximumMultiplier = a_SaveData.Z_MaximumMultiplier;
 
         // Career
+        C_TotalWavesCompleted = a_SaveData.Z_TotalWavesCompleted;
         C_TotalPlayTime = a_SaveData.Z_TotalPlayTime;
         C_TotalRuns = a_SaveData.Z_TotalRuns;
         C_TotalEnemiesKilled = a_SaveData.Z_TotalEnemiesKilled;

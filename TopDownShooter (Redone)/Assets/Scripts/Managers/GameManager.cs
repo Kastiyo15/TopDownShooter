@@ -22,13 +22,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _panelPauseMenu;
     [SerializeField] private GameObject _panelOptionsMenu;
     [SerializeField] private GameObject _panelGameUI;
-    [SerializeField] private GameObject _panelDeathScreen;
+    [SerializeField] private GameObject _panelDeathScreen1;
+    [SerializeField] private GameObject _panelDeathScreen2;
+    [SerializeField] private GameObject _panelUpgradesScreen;
 
     [Header("Scene Strings")]
     [SerializeField] private string _stringMainMenu;
     [SerializeField] private string _stringGameScene;
 
     [Header("References")]
+    [SerializeField] private GameObject Player;
     [SerializeField] private Crosshair _scriptCrosshair;
     [SerializeField] private Volume _globalVolume;
     private VolumeProfile _profile;
@@ -103,7 +106,9 @@ public class GameManager : MonoBehaviour
     {
         SwitchVignette(false);
 
-        Time.timeScale = 0f;
+        Player.SetActive(false);
+
+        Time.timeScale = 1f;
         GameIsPaused = false;
         IsDead = true;
         TimerActive = false;
@@ -124,7 +129,7 @@ public class GameManager : MonoBehaviour
 
         _panelPauseMenu.SetActive(false);
         _panelOptionsMenu.SetActive(false);
-        _panelDeathScreen.SetActive(true);
+        _panelDeathScreen1.SetActive(true);
         _panelGameUI.SetActive(false);
     }
 
@@ -145,7 +150,9 @@ public class GameManager : MonoBehaviour
         _panelMaster.SetActive(false);
         _panelPauseMenu.SetActive(false);
         _panelOptionsMenu.SetActive(false);
-        _panelDeathScreen.SetActive(false);
+        _panelDeathScreen1.SetActive(false);
+        _panelDeathScreen2.SetActive(false);
+        _panelUpgradesScreen.SetActive(false);
         _panelGameUI.SetActive(true);
 
         Time.timeScale = 1f;

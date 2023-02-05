@@ -44,6 +44,11 @@ public class EnemyWaveSpawner : MonoBehaviour
         {
             EndWave();
         }
+
+        if (GameManager.Instance.IsDead)
+        {
+            StopAllCoroutines();
+        }
     }
 
 
@@ -88,6 +93,8 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveComplete = true;
 
         ScoreStatsManager.Instance.AddWaveScore(WaveNumber * 10);
+
+        CareerStatsManager.Instance.UpdateCareerStatsVariable(CareerStatsManager.VariableType.WavesCompleted);
 
         // Add reset point if its been 5 waves
         if (WaveNumber % 6 == 0)

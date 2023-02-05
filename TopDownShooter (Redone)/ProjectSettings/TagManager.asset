@@ -16,6 +16,7 @@ TagManager:
   - Obstacle
   - Cinemachine
   - RoomWallsParent
+  - TriggerParent
   layers:
   - Default
   - TransparentFX

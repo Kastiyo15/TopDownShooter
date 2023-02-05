@@ -37,7 +37,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private TMP_Text _txtPlayerHealth;
 
     [Header("HUD Groups")]
-    [SerializeField] private GameObject _centralHUD;
+    [SerializeField] private GameObject _uiHUD;
 
 
     private void Start()
@@ -54,13 +54,13 @@ public class HUDScript : MonoBehaviour
 
     private void HideHUD()
     {
-        _centralHUD.SetActive(false);
+        _uiHUD.SetActive(false);
     }
 
 
     public void ShowHUD()
     {
-        _centralHUD.SetActive(true);
+        _uiHUD.SetActive(true);
     }
 
 

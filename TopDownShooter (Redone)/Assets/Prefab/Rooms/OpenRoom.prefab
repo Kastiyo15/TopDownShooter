@@ -358,6 +358,7 @@ MonoBehaviour:
   _rangeX: 18
   _rangeY: 10
   _roomCentre: {fileID: 4844970429334168383}
+  _triggerParent: {fileID: 4844970429615015953}
 --- !u!1 &4844970429205584580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2500,6 +2501,7 @@ MonoBehaviour:
   _rangeX: 18
   _rangeY: 10
   _roomCentre: {fileID: 4844970429334168383}
+  _triggerParent: {fileID: 4844970429615015953}
 --- !u!1 &4844970429790629524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,6 +2799,7 @@ MonoBehaviour:
   _rangeX: 18
   _rangeY: 10
   _roomCentre: {fileID: 4844970429334168383}
+  _triggerParent: {fileID: 4844970429615015953}
 --- !u!1 &4844970429959143624
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,6 +3208,7 @@ MonoBehaviour:
   _rangeX: 18
   _rangeY: 10
   _roomCentre: {fileID: 4844970429334168383}
+  _triggerParent: {fileID: 4844970429615015953}
 --- !u!1 &4844970430372365516
 GameObject:
   m_ObjectHideFlags: 0

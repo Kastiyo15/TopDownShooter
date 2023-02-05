@@ -54,6 +54,7 @@ public class SaveData
     // Prefix C_
     #region PLAYER CAREER STATS
     [Header("Career Stats")]
+    public int Z_TotalWavesCompleted; // H/M/S played
     public float Z_TotalPlayTime; // H/M/S played
     public int Z_TotalRuns; // How many times player has restarted
 

@@ -83,4 +83,10 @@ public class EnemyEntity : MonoBehaviour, IKnockable, IHittable
     {
         HitByBulletID = id;
     }
+
+
+    public void KillOnPlayerDeath()
+    {
+        gameObject.GetComponent<Health>().Kill(10000);
+    }
 }
